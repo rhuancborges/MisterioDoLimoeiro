@@ -1,61 +1,160 @@
 /**
- * Essa eh o Misterio no Limoeiro...
+ *  Essa eh a classe principal da aplicacao "World of Zull".
+ *  "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
+ *  Usuarios podem caminhar em um cenario. E eh tudo! Ele realmente
+ *  precisa ser estendido para fazer algo interessante!
  * 
- * Essa classe principal cria e inicializa todas as outras: ela cria os
- * ambientes, cria o analisador e comeca o jogo. Ela tambeme avalia e
- * executa os comandos que o analisador retorna.
+ *  Para jogar esse jogo, crie uma instancia dessa classe e chame o metodo
+ *  "jogar".
  * 
- * @author autores
- * @version 1.0
+ *  Essa classe principal cria e inicializa todas as outras: ela cria os
+ *  ambientes, cria o analisador e comeca o jogo. Ela tambeme avalia e 
+ *  executa os comandos que o analisador retorna.
+ * 
+ * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
+ * @version 2011.07.31 (2016.02.01)
  */
 
-public class Jogo {
-    private Analisador analisador;
-    private Ambiente ambienteAtual;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.TextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Jogo 
+{
+    private Analisador analisador;
+    private String textoAtual;
+    private Ambiente ambienteAtual;
+    private JFrame janela;
+    private JTextArea listaItens;
+    private JTextArea inventario;
+    private JTextArea jogo;
+    private JTextArea localAtual;
+    private JTextField comandos;
+    private JButton enviar;
+        
     /**
      * Cria o jogo e incializa seu mapa interno.
      */
-    public Jogo() {
+    public Jogo() 
+    {
         criarAmbientes();
         analisador = new Analisador();
+        janela = new JFrame("Misterio do Limoeiro");
+        montarJanela();
+        exibir();
     }
 
+    public void exibir(){
+        janela.setVisible(true);
+    }
+
+    public void montarJanela(){
+        janela.setSize(1280, 720);
+        janela.setLayout(new BorderLayout());
+
+        JPanel painelSuperior = new JPanel();
+        painelSuperior.setLayout(new FlowLayout());
+        localAtual = new JTextArea();
+        localAtual.setEditable(false);
+        painelSuperior.add(localAtual);
+
+        
+        JPanel painelEsquerda = new JPanel();
+        painelEsquerda.setLayout(new FlowLayout());
+        listaItens = new JTextArea("Lista de evidências: \n\n");
+        listaItens.setEditable(false);
+        painelEsquerda.add(listaItens);
+
+        JPanel painelCentro = new JPanel();
+        painelCentro.setLayout(new FlowLayout());
+        ImageIcon imagem = new ImageIcon("./mapa.jpg");
+        JLabel labelImagem = new JLabel(imagem);
+        painelCentro.add(labelImagem);
+        
+        JPanel painelDireita = new JPanel();
+        painelDireita.setLayout(new FlowLayout());
+        inventario = new JTextArea("Inventário: \n\n - Mapa\n - Lupa\n - Carteira\n - Distintivo\n - Câmera\n");
+        inventario.setEditable(false);
+        painelDireita.add(inventario);
+
+        JPanel painelInferior = new JPanel();
+        painelInferior.setLayout(new BoxLayout(painelInferior, BoxLayout.Y_AXIS));
+        jogo = new JTextArea();
+        JPanel interacao = new JPanel();
+        interacao.setLayout(new BoxLayout(interacao, BoxLayout.X_AXIS));
+        comandos = new JTextField();
+        enviar = new JButton("Executar Comando");
+        interacao.add(comandos);
+        interacao.add(enviar);
+
+        painelInferior.add(jogo);
+        painelInferior.add(interacao);
+
+        janela.add(painelSuperior, BorderLayout.NORTH);
+        janela.add(painelEsquerda, BorderLayout.WEST);
+        janela.add(painelCentro, BorderLayout.CENTER);
+        janela.add(painelDireita, BorderLayout.EAST);
+        janela.add(painelInferior, BorderLayout.SOUTH);
+
+        
+    }
+    
+    public void acoesJanela(){
+        enviar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                textoAtual = comandos.getText();
+                comandos.setText("");
+            }
+        });
+    }
+
+    /* */
     /**
      * Cria todos os ambientes e liga as saidas deles
      */
-    private void criarAmbientes() {
-        Ambiente fora, anfiteatro, cantina, laboratorio, escritorio;
+    private void criarAmbientes()
+    {
 
+        Ambiente delegacia, praca;
+      
         // cria os ambientes
-        fora = new Ambiente("do lado de fora da entrada principal de uma universidade");
-        anfiteatro = new Ambiente("no anfiteatro");
-        cantina = new Ambiente("na cantina do campus");
-        laboratorio = new Ambiente("no laboratorio de computacao");
-        escritorio = new Ambiente("na sala de administracao dos computadores");
-
+        delegacia = new Ambiente("na delegacia", "Jeremias", "");
+        praca = new Ambiente("na praça central", "", "");
+        
         // inicializa as saidas dos ambientes
-        fora.ajustarSaidas(null, anfiteatro, laboratorio, cantina);
-        anfiteatro.ajustarSaidas(null, null, null, fora);
-        cantina.ajustarSaidas(null, fora, null, null);
-        laboratorio.ajustarSaidas(fora, escritorio, null, null);
-        escritorio.ajustarSaidas(null, null, null, laboratorio);
+        delegacia.ajustarSaidas(null, praca, null, null);
 
-        ambienteAtual = fora; // o jogo comeca do lado de fora
+        // o jogo comeca na delegacia
+        ambienteAtual = delegacia;
     }
 
     /**
-     * Rotina principal do jogo. Fica em loop ate terminar o jogo.
+     *  Rotina principal do jogo. Fica em loop ate terminar o jogo.
      */
-    public void jogar() {
+    public void jogar() 
+    {            
         imprimirBoasVindas();
-
+        acoesJanela();
         // Entra no loop de comando principal. Aqui nos repetidamente lemos
         // comandos e os executamos ate o jogo terminar.
-
+                
         boolean terminado = false;
-        while (!terminado) {
-            Comando comando = analisador.pegarComando();
+        while (! terminado) {
+            Comando comando = analisador.pegarComando(textoAtual);
             terminado = processarComando(comando);
         }
         System.out.println("Obrigado por jogar. Ate mais!");
@@ -64,41 +163,36 @@ public class Jogo {
     /**
      * Imprime a mensagem de abertura para o jogador.
      */
-    private void imprimirBoasVindas() {
-        System.out.println();
-        System.out.println("Bem-vindo ao World of Zuul!");
-        System.out.println("World of Zuul eh um novo jogo de aventura, incrivelmente chato.");
-        System.out.println("Digite 'ajuda' se voce precisar de ajuda.");
-        System.out.println();
+    private void imprimirBoasVindas()
+    {
+        
+        jogo.append("\nBem-vindo, Detetive!\n");
+        jogo.append("Sou o delegado Jeremias, do bairro do Limoeiro. Você está aqui para resolver um crime que está assombrando o nosso querido bairro\n");
+        jogo.append("Infelizmente, houve um homicídio há uma semana e o assassino está à solta\n\n");
+        jogo.append("Seu objetivo é reunir provas, identificar o suspeito e voltar à delegacia com o nome do assassino\n");
+        jogo.append("Para te ajudar nessa jornada, você vai receber um mapa do bairro, uma lupa, uma carteira, um distintivo e uma câmera\n");
+        jogo.append("Explore todo o bairro e solucione o caso. Contamos com você, detetive!\n\n");
 
-        System.out.println("Voce esta " + ambienteAtual.getDescricao());
-
-        System.out.print("Saidas: ");
-        if (ambienteAtual.saidaNorte != null) {
-            System.out.print("norte ");
+        jogo.append("Digite 'ajuda' se voce precisar de ajuda\n.");
+        
+        localAtual.append("Voce está " + ambienteAtual.getDescricao() + "\n\n");
+    
+        localAtual.append("Saidas: \n");
+        for(String s: ambienteAtual.getSaidas().keySet()){
+            localAtual.append(s + ": " + ambienteAtual.getSaidas().get(s).getDescricao() + "\n");
         }
-        if (ambienteAtual.saidaLeste != null) {
-            System.out.print("leste ");
-        }
-        if (ambienteAtual.saidaSul != null) {
-            System.out.print("sul ");
-        }
-        if (ambienteAtual.saidaOeste != null) {
-            System.out.print("oeste ");
-        }
-        System.out.println();
     }
 
     /**
      * Dado um comando, processa-o (ou seja, executa-o)
-     * 
      * @param comando O Comando a ser processado.
      * @return true se o comando finaliza o jogo.
      */
-    private boolean processarComando(Comando comando) {
+    private boolean processarComando(Comando comando) 
+    {
         boolean querSair = false;
 
-        if (comando.ehDesconhecido()) {
+        if(comando.ehDesconhecido()) {
             System.out.println("Eu nao entendi o que voce disse...");
             return false;
         }
@@ -106,9 +200,11 @@ public class Jogo {
         String palavraDeComando = comando.getPalavraDeComando();
         if (palavraDeComando.equals("ajuda")) {
             imprimirAjuda();
-        } else if (palavraDeComando.equals("ir")) {
+        }
+        else if (palavraDeComando.equals("ir")) {
             irParaAmbiente(comando);
-        } else if (palavraDeComando.equals("sair")) {
+        }
+        else if (palavraDeComando.equals("sair")) {
             querSair = sair(comando);
         }
 
@@ -119,10 +215,11 @@ public class Jogo {
 
     /**
      * Printe informacoes de ajuda.
-     * Aqui nos imprimimos algo bobo e enigmatico e a lista de
+     * Aqui nos imprimimos algo bobo e enigmatico e a lista de 
      * palavras de comando
      */
-    private void imprimirAjuda() {
+    private void imprimirAjuda() 
+    {
         System.out.println("Voce esta perdido. Voce esta sozinho. Voce caminha");
         System.out.println("pela universidade.");
         System.out.println();
@@ -130,12 +227,13 @@ public class Jogo {
         System.out.println("   ir sair ajuda");
     }
 
-    /**
-     * Tenta ir em uma direcao. Se existe uma saida entra no
+    /** 
+     * Tenta ir em uma direcao. Se existe uma saida entra no 
      * novo ambiente, caso contrario imprime mensagem de erro.
      */
-    private void irParaAmbiente(Comando comando) {
-        if (!comando.temSegundaPalavra()) {
+    private void irParaAmbiente(Comando comando) 
+    {
+        if(!comando.temSegundaPalavra()) {
             // se nao ha segunda palavra, nao sabemos pra onde ir...
             System.out.println("Ir pra onde?");
             return;
@@ -145,55 +243,37 @@ public class Jogo {
 
         // Tenta sair do ambiente atual
         Ambiente proximoAmbiente = null;
-        if (direcao.equals("norte")) {
-            proximoAmbiente = ambienteAtual.saidaNorte;
-        }
-        if (direcao.equals("leste")) {
-            proximoAmbiente = ambienteAtual.saidaLeste;
-        }
-        if (direcao.equals("sul")) {
-            proximoAmbiente = ambienteAtual.saidaSul;
-        }
-        if (direcao.equals("oeste")) {
-            proximoAmbiente = ambienteAtual.saidaOeste;
-        }
-
+        proximoAmbiente = ambienteAtual.getSaidas().get(direcao);
+      
         if (proximoAmbiente == null) {
             System.out.println("Nao ha passagem!");
-        } else {
+        }
+        else {
             ambienteAtual = proximoAmbiente;
-
+            
             System.out.println("Voce esta " + ambienteAtual.getDescricao());
-
+            
             System.out.print("Saidas: ");
-            if (ambienteAtual.saidaNorte != null) {
-                System.out.print("norte ");
-            }
-            if (ambienteAtual.saidaLeste != null) {
-                System.out.print("leste ");
-            }
-            if (ambienteAtual.saidaSul != null) {
-                System.out.print("sul ");
-            }
-            if (ambienteAtual.saidaOeste != null) {
-                System.out.print("oeste ");
-            }
+            
             System.out.println();
         }
     }
 
-    /**
+    /** 
      * "Sair" foi digitado. Verifica o resto do comando pra ver
      * se nos queremos realmente sair do jogo.
-     * 
      * @return true, se este comando sai do jogo, false, caso contrario
      */
-    private boolean sair(Comando comando) {
-        if (comando.temSegundaPalavra()) {
+    private boolean sair(Comando comando) 
+    {
+        if(comando.temSegundaPalavra()) {
             System.out.println("Sair o que?");
             return false;
-        } else {
-            return true; // sinaliza que nos queremos sair
+        }
+        else {
+            return true;  // sinaliza que nos queremos sair
         }
     }
+    
 }
+

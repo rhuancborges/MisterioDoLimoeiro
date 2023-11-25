@@ -13,13 +13,18 @@
  * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
  * @version 2011.07.31 (2016.02.01)
  */
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Ambiente 
 {
-    public String descricao;
-    public Ambiente saidaNorte;
-    public Ambiente saidaSul;
-    public Ambiente saidaLeste;
-    public Ambiente saidaOeste;
+    private String nome;
+    private String descricao;
+    private Map<String, Ambiente> saidas;
+    private Personagem npc;
+    private Item item;
 
     /**
      * Cria um ambiente com a "descricao" passada. Inicialmente, ele
@@ -30,9 +35,17 @@ public class Ambiente
      * "um jardim aberto".
      * @param descricao A descricao do ambiente.
      */
-    public Ambiente(String descricao) 
+    public Ambiente(String descricao, String nomePersonagem, String nomeItem) 
     {
         this.descricao = descricao;
+        saidas = new HashMap<>();
+        if (!nomePersonagem.equals("")){
+            npc = new Personagem(nomePersonagem);
+        }
+        if (!nomeItem.equals("")){
+            item = new Item();
+        }
+        
     }
 
     /**
@@ -45,14 +58,16 @@ public class Ambiente
      */
     public void ajustarSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste) 
     {
-        if(norte != null)
-            saidaNorte = norte;
-        if(leste != null)
-            saidaLeste = leste;
-        if(sul != null)
-            saidaSul = sul;
-        if(oeste != null)
-            saidaOeste = oeste;
+        ajustarSaida("norte", norte);
+        ajustarSaida("sul", sul);
+        ajustarSaida("leste", leste);
+        ajustarSaida("oeste", oeste);
+    }
+
+    private void ajustarSaida(String chave, Ambiente valor){
+        if(valor != null){
+            saidas.put(chave, valor);
+        }
     }
 
     /**
@@ -61,6 +76,10 @@ public class Ambiente
     public String getDescricao()
     {
         return descricao;
+    }
+
+    public Map<String, Ambiente> getSaidas(){
+        return Collections.unmodifiableMap(saidas);
     }
 
 }
