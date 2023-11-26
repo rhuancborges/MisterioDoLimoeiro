@@ -22,6 +22,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import javafx.scene.paint.Color;
+
 import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
@@ -70,25 +75,42 @@ public class Jogo
         localAtual = new JTextArea();
         localAtual.setEditable(false);
         painelSuperior.add(localAtual);
-
         
+        // O BoxLayout permite que os painéis tenham tamanho preferenciais ou fixos
+        painelSuperior.setPreferredSize(new Dimension(500, 150));
+        painelSuperior.setLayout(new BoxLayout(painelSuperior, BoxLayout.PAGE_AXIS));
+        // Cria uma margem entre os painéis
+        EmptyBorder borderSuperior = new EmptyBorder(10, 10, 10, 10);
+        painelSuperior.setBorder(borderSuperior);
+  
         JPanel painelEsquerda = new JPanel();
         painelEsquerda.setLayout(new FlowLayout());
         listaItens = new JTextArea("Lista de evidências: \n\n");
         listaItens.setEditable(false);
         painelEsquerda.add(listaItens);
 
+        painelEsquerda.setPreferredSize(new Dimension(300, 520));
+        painelEsquerda.setLayout(new BoxLayout(painelEsquerda, BoxLayout.PAGE_AXIS));
+        EmptyBorder borderEsquerda = new EmptyBorder(0, 10, 10, 10);
+        painelEsquerda.setBorder(borderEsquerda);
+
         JPanel painelCentro = new JPanel();
         painelCentro.setLayout(new FlowLayout());
-        ImageIcon imagem = new ImageIcon("./mapa.jpg");
+        ImageIcon imagem = new ImageIcon("./MisterioDoLimoeiro/src/mapa.jpg");
         JLabel labelImagem = new JLabel(imagem);
         painelCentro.add(labelImagem);
+        painelCentro.setPreferredSize(new Dimension(800, 520));
         
         JPanel painelDireita = new JPanel();
         painelDireita.setLayout(new FlowLayout());
         inventario = new JTextArea("Inventário: \n\n - Mapa\n - Lupa\n - Carteira\n - Distintivo\n - Câmera\n");
         inventario.setEditable(false);
         painelDireita.add(inventario);
+        
+        painelDireita.setPreferredSize(new Dimension(300, 520));
+        painelDireita.setLayout(new BoxLayout(painelDireita, BoxLayout.PAGE_AXIS));
+        EmptyBorder borderDireita = new EmptyBorder(0, 10, 10, 10);
+        painelDireita.setBorder(borderDireita);
 
         JPanel painelInferior = new JPanel();
         painelInferior.setLayout(new BoxLayout(painelInferior, BoxLayout.Y_AXIS));
@@ -109,7 +131,6 @@ public class Jogo
         janela.add(painelDireita, BorderLayout.EAST);
         janela.add(painelInferior, BorderLayout.SOUTH);
 
-        
     }
     
     public void acoesJanela(){
