@@ -79,7 +79,7 @@ public class Jogo
         // O BoxLayout permite que os painéis tenham tamanho preferenciais ou fixos
         painelSuperior.setPreferredSize(new Dimension(500, 150));
         painelSuperior.setLayout(new BoxLayout(painelSuperior, BoxLayout.PAGE_AXIS));
-        // Cria uma margem entre os painéis
+        // Cria uma margem entre os painéiss
         EmptyBorder borderSuperior = new EmptyBorder(10, 10, 10, 10);
         painelSuperior.setBorder(borderSuperior);
   
@@ -96,7 +96,7 @@ public class Jogo
 
         JPanel painelCentro = new JPanel();
         painelCentro.setLayout(new FlowLayout());
-        ImageIcon imagem = new ImageIcon("./MisterioDoLimoeiro/src/mapa.jpg");
+        ImageIcon imagem = new ImageIcon("./src/mapa.jpg");
         JLabel labelImagem = new JLabel(imagem);
         painelCentro.add(labelImagem);
         painelCentro.setPreferredSize(new Dimension(800, 520));
