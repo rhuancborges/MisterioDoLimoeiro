@@ -173,18 +173,18 @@ public class Jogo
 
         // ARRUMAR SAÍDAS
         // inicializa as saidas dos ambientes
-        delegacia.ajustarSaidas(null, praca, null, null);
-        praca.ajustarSaidas(null, praca, null, null);
-        casaDaMagali.ajustarSaidas(null, praca, null, null);
-        casaDaMonica.ajustarSaidas(null, praca, null, null);
-        casaDoCebola.ajustarSaidas(null, praca, null, null);
-        escola.ajustarSaidas(null, praca, null, null);
-        cinema.ajustarSaidas(null, praca, null, null);
-        padaria.ajustarSaidas(null, praca, null, null);
-        bosque.ajustarSaidas(null, praca, null, null);
-        galpao.ajustarSaidas(null, praca, null, null);
-        lago.ajustarSaidas(null, praca, null, null);
-        pastelariaJuca.ajustarSaidas(null, praca, null, null);
+        delegacia.setSaidas(null, praca, null, null);
+        praca.setSaidas(null, praca, null, null);
+        casaDaMagali.setSaidas(null, praca, null, null);
+        casaDaMonica.setSaidas(null, praca, null, null);
+        casaDoCebola.setSaidas(null, praca, null, null);
+        escola.setSaidas(null, praca, null, null);
+        cinema.setSaidas(null, praca, null, null);
+        padaria.setSaidas(null, praca, null, null);
+        bosque.setSaidas(null, praca, null, null);
+        galpao.setSaidas(null, praca, null, null);
+        lago.setSaidas(null, praca, null, null);
+        pastelariaJuca.setSaidas(null, praca, null, null);
 
         // o jogo comeca na delegacia
         ambienteAtual = delegacia;
@@ -285,7 +285,7 @@ public class Jogo
         String direcao = comando.getSegundaPalavra();
 
         // Tenta sair do ambiente atual
-        Ambiente proxAmbiente = ambienteAtual.ajustarSaidas(direcao);
+        Ambiente proxAmbiente = ambienteAtual.getSaida(direcao);
 
         if(proxAmbiente == null){
             System.out.println("Não há nenhum caminho!");

@@ -55,18 +55,12 @@ public class Ambiente
      * @param sul A saida sul.
      * @param oeste A saida oeste.
      */
-    public void ajustarSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste) 
+    public void setSaidas(Ambiente vizinhoNorte, Ambiente vizinhoLeste, Ambiente vizinhoSul, Ambiente vizinhoOeste) 
     {
-        ajustarSaida("norte", norte);
-        ajustarSaida("sul", sul);
-        ajustarSaida("leste", leste);
-        ajustarSaida("oeste", oeste);
-    }
-
-    private void ajustarSaida(String chave, Ambiente valor){
-        if(valor != null){
-            saidas.put(chave, valor);
-        }
+        saidas.put("norte", vizinhoNorte);
+        saidas.put("leste", vizinhoSul);
+        saidas.put("sul", vizinhoLeste);
+        saidas.put("oeste", vizinhoOeste);
     }
 
     /**
