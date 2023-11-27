@@ -17,6 +17,7 @@
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Ambiente 
 {
@@ -35,8 +36,7 @@ public class Ambiente
      * "um jardim aberto".
      * @param descricao A descricao do ambiente.
      */
-    public Ambiente(String descricao, String nomePersonagem, String nomeItem) 
-    {
+    public Ambiente(String descricao, String nomePersonagem, String nomeItem) {
         this.descricao = descricao;
         saidas = new HashMap<>();
         if (!nomePersonagem.equals("")){
@@ -45,7 +45,6 @@ public class Ambiente
         if (!nomeItem.equals("")){
             item = new Item();
         }
-        
     }
 
     /**
@@ -73,13 +72,25 @@ public class Ambiente
     /**
      * @return A descricao do ambiente.
      */
-    public String getDescricao()
-    {
+    public String getPequenaDescricao(){
         return descricao;
     }
 
-    public Map<String, Ambiente> getSaidas(){
-        return Collections.unmodifiableMap(saidas);
+    public String getLongaDescricao(){
+        return descricao + ".\n" + getStringSaida();
+    }
+
+    private String getStringSaida(){
+        String returnString = "Saídas: ";
+        Set<String> chaves = saidas.keySet();
+        for(String saida : chaves){
+            returnString += " " + saida;
+        }
+        return returnString;
+    }
+
+    public Ambiente getSaida(String direcao){
+        return saidas.get(direcao);
     }
 
 }

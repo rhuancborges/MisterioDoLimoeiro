@@ -150,14 +150,41 @@ public class Jogo
     private void criarAmbientes()
     {
 
-        Ambiente delegacia, praca;
+        Ambiente delegacia, praca, casaDaMonica, casaDaMagali, casaDoCebola, escola, cinema, 
+        padaria, bosque, galpao, lago, pastelariaJuca;
       
         // cria os ambientes
+
+        // COMPLETAR PERSONAGENS E ITENS
+
         delegacia = new Ambiente("na delegacia", "Jeremias", "");
         praca = new Ambiente("na praça central", "", "");
-        
+        casaDaMagali = new Ambiente("na casa da Magali", "", "");
+        casaDaMonica = new Ambiente("na casa da Mônica", "", "");
+        casaDoCebola = new Ambiente("na casa do Cebola", "", "");
+        escola = new Ambiente("na escola", "", "");
+        cinema = new Ambiente("no cinema", "", "");
+        padaria = new Ambiente("na padaria", "", "");
+        bosque = new Ambiente("no bosque", "", "");
+        galpao = new Ambiente("no galpão", "", "");
+        lago = new Ambiente("no lago", "", "");
+        pastelariaJuca = new Ambiente("na pastelaria do Juca", "", "");
+
+
+        // ARRUMAR SAÍDAS
         // inicializa as saidas dos ambientes
         delegacia.ajustarSaidas(null, praca, null, null);
+        praca.ajustarSaidas(null, praca, null, null);
+        casaDaMagali.ajustarSaidas(null, praca, null, null);
+        casaDaMonica.ajustarSaidas(null, praca, null, null);
+        casaDoCebola.ajustarSaidas(null, praca, null, null);
+        escola.ajustarSaidas(null, praca, null, null);
+        cinema.ajustarSaidas(null, praca, null, null);
+        padaria.ajustarSaidas(null, praca, null, null);
+        bosque.ajustarSaidas(null, praca, null, null);
+        galpao.ajustarSaidas(null, praca, null, null);
+        lago.ajustarSaidas(null, praca, null, null);
+        pastelariaJuca.ajustarSaidas(null, praca, null, null);
 
         // o jogo comeca na delegacia
         ambienteAtual = delegacia;
@@ -178,7 +205,7 @@ public class Jogo
             Comando comando = analisador.pegarComando(textoAtual);
             terminado = processarComando(comando);
         }
-        System.out.println("Obrigado por jogar. Ate mais!");
+        System.out.println("Obrigado por jogar. Até mais!");
     }
 
     /**
@@ -196,12 +223,7 @@ public class Jogo
 
         jogo.append("Digite 'ajuda' se voce precisar de ajuda\n.");
         
-        localAtual.append("Voce está " + ambienteAtual.getDescricao() + "\n\n");
-    
-        localAtual.append("Saidas: \n");
-        for(String s: ambienteAtual.getSaidas().keySet()){
-            localAtual.append(s + ": " + ambienteAtual.getSaidas().get(s).getDescricao() + "\n");
-        }
+        localAtual.append("Voce está " + ambienteAtual.getLongaDescricao() + "\n\n");
     }
 
     /**
@@ -241,10 +263,10 @@ public class Jogo
      */
     private void imprimirAjuda() 
     {
-        System.out.println("Voce esta perdido. Voce esta sozinho. Voce caminha");
-        System.out.println("pela universidade.");
+        System.out.println("Você está investigando um homicício. Você está sozinho. Você caminha");
+        System.out.println("pela Cidade do Limoeiro.");
         System.out.println();
-        System.out.println("Suas palavras de comando sao:");
+        System.out.println("Suas palavras de comando são:");
         System.out.println("   ir sair ajuda");
     }
 
@@ -263,20 +285,13 @@ public class Jogo
         String direcao = comando.getSegundaPalavra();
 
         // Tenta sair do ambiente atual
-        Ambiente proximoAmbiente = null;
-        proximoAmbiente = ambienteAtual.getSaidas().get(direcao);
-      
-        if (proximoAmbiente == null) {
-            System.out.println("Nao ha passagem!");
-        }
-        else {
-            ambienteAtual = proximoAmbiente;
-            
-            System.out.println("Voce esta " + ambienteAtual.getDescricao());
-            
-            System.out.print("Saidas: ");
-            
-            System.out.println();
+        Ambiente proxAmbiente = ambienteAtual.ajustarSaidas(direcao);
+
+        if(proxAmbiente == null){
+            System.out.println("Não há nenhum caminho!");
+        } else {
+            ambienteAtual = proxAmbiente;
+            System.out.println(ambienteAtual.getLongaDescricao());
         }
     }
 
