@@ -35,17 +35,12 @@ public class Ambiente
      * "um jardim aberto".
      * @param descricao A descricao do ambiente.
      */
-    public Ambiente(String descricao, String nomePersonagem, String nomeItem) 
+    public Ambiente(String descricao, Personagem personagem, Item item) 
     {
         this.descricao = descricao;
         saidas = new HashMap<>();
-        if (!nomePersonagem.equals("")){
-            npc = new Personagem(nomePersonagem);
-        }
-        if (!nomeItem.equals("")){
-            item = new Item();
-        }
-        
+        npc = personagem;
+        this.item = item;
     }
 
     /**

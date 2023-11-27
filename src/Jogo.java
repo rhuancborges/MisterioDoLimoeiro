@@ -1,18 +1,21 @@
 /**
- *  Essa eh a classe principal da aplicacao "World of Zull".
- *  "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
- *  Usuarios podem caminhar em um cenario. E eh tudo! Ele realmente
- *  precisa ser estendido para fazer algo interessante!
+ *  Essa eh a classe principal da aplicação "Misterio do Limoeiro"
+ *  "Misterio do Limoeiro" eh um jogo de investigacao baseado em texto.
+ *  Usuarios podem caminhar entre cenarios, capturar itens e conversar com personagens. 
+ *  A ideia eh o jogador descobrir quem eh o assassino da historia, deduzindo pistas ao longo
+ * dos cenarios e delatar ao delegado.
+ *  Se o delegado receber o nome correto do assassino, o jogador ganha o jogo. Caso receba outro
+ * nome, o jogo termina e o jogador perde, pois o assassino fugiu.
  * 
  *  Para jogar esse jogo, crie uma instancia dessa classe e chame o metodo
- *  "jogar".
+ *  "jogar". 
  * 
  *  Essa classe principal cria e inicializa todas as outras: ela cria os
- *  ambientes, cria o analisador e comeca o jogo. Ela tambeme avalia e 
- *  executa os comandos que o analisador retorna.
+ *  ambientes, cria o analisador e comeca o jogo. Ela avalia,
+ *  executa os comandos que o analisador retorna e tambem funciona como interface grafica
  * 
- * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
- * @version 2011.07.31 (2016.02.01)
+ * @author  Rhuan, Lara
+ * @version 1.1
  */
 
 import javax.swing.BoxLayout;
@@ -132,8 +135,8 @@ public class Jogo
         Ambiente delegacia, praca;
       
         // cria os ambientes
-        delegacia = new Ambiente("na delegacia", "Jeremias", "");
-        praca = new Ambiente("na praça central", "", "");
+        delegacia = new Ambiente("na delegacia", null, null);
+        praca = new Ambiente("na praça central", null, null);
         
         // inicializa as saidas dos ambientes
         delegacia.ajustarSaidas(null, praca, null, null);
