@@ -275,27 +275,26 @@ public class Jogo
      * Tenta ir em uma direcao. Se existe uma saida entra no 
      * novo ambiente, caso contrario imprime mensagem de erro.
      */
-    private void irParaAmbiente(Comando comando) 
-    {
-        if(!comando.temSegundaPalavra()) {
-            // se nao ha segunda palavra, nao sabemos pra onde ir...
-            System.out.println("Ir pra onde?");
+    private void irParaAmbiente(Comando comando) {
+        if (!comando.temSegundaPalavra()) {
+            // se não há segunda palavra, não sabemos para onde ir...
+            jogo.append("Ir para onde?\n");
             return;
         }
-
+    
         String direcao = comando.getSegundaPalavra();
-
+    
         // Tenta sair do ambiente atual
         Ambiente proxAmbiente = ambienteAtual.getSaida(direcao);
-
-        if(proxAmbiente == null){
-            System.out.println("Não há nenhum caminho!");
+    
+        if (proxAmbiente == null) {
+            jogo.append("Não há nenhum caminho!\n");
         } else {
             ambienteAtual = proxAmbiente;
-            System.out.println(ambienteAtual.getLongaDescricao());
+            localAtual.setText("Você está " + ambienteAtual.getLongaDescricao() + "\n\n");
         }
     }
-
+    
     /** 
      * "Sair" foi digitado. Verifica o resto do comando pra ver
      * se nos queremos realmente sair do jogo.
