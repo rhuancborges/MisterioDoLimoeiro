@@ -117,6 +117,9 @@ public class Jogo
         interacao.add(comandos);
         interacao.add(enviar);
 
+        EmptyBorder borderInferior = new EmptyBorder(0, 10, 10, 10);
+        painelInferior.setBorder(borderInferior);
+
         painelInferior.add(jogo);
         painelInferior.add(interacao);
 
@@ -224,7 +227,7 @@ public class Jogo
 
         jogo.append("Digite 'ajuda' se voce precisar de ajuda\n.");
         
-        localAtual.append("Voce está " + ambienteAtual.getLongaDescricao() + "\n\n");
+        localAtual.append("Você está " + ambienteAtual.getLongaDescricao() + "\n\n");
     }
 
     /**
