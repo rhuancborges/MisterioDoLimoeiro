@@ -14,14 +14,12 @@
  * @version 2011.07.31 (2016.02.01)
  */
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class Ambiente 
 {
-    private String nome;
     private String descricao;
     private Map<String, Ambiente> saidas;
     private Personagem npc;
