@@ -53,6 +53,7 @@ public class Jogo
         analisador = new Analisador();
         janela = new JFrame("Misterio do Limoeiro");
         montarJanela();
+        acoesJanela();
         exibir();
     }
 
@@ -168,17 +169,17 @@ public class Jogo
         // ARRUMAR SAÍDAS
         // inicializa as saidas dos ambientes
         delegacia.setSaidas(null, praca, null, null, null, null);
-        praca.setSaidas(casaDaMonica, lago, null, delegacia, null, null);
-        casaDaMagali.setSaidas(null, praca, null, null,null, null);
-        casaDaMonica.setSaidas(null, praca, null, null, null, null);
-        casaDoCebola.setSaidas(null, praca, null, null, null, null);
-        escola.setSaidas(null, praca, null, null, null, null);
-        cinema.setSaidas(null, praca, null, null, null, null);
-        padaria.setSaidas(null, praca, null, null, null, null);
-        bosque.setSaidas(null, praca, null, null, null, null);
-        galpao.setSaidas(null, praca, null, null, null, null);
-        lago.setSaidas(null, praca, null, null, null, null);
-        pastelariaJuca.setSaidas(null, praca, null, null, null, null);
+        praca.setSaidas(casaDaMonica, pastelariaJuca, padaria, delegacia, null, null);
+        casaDaMagali.setSaidas(null, casaDoCebola, pastelariaJuca, casaDaMonica,null, null);
+        casaDaMonica.setSaidas(null, casaDaMagali, praca, null, null, null);
+        casaDoCebola.setSaidas(null, null, lago, casaDaMagali, null, null);
+        escola.setSaidas(null, null, null, lago, null, null);
+        cinema.setSaidas(padaria, bosque, null, padaria, null, null);
+        padaria.setSaidas(praca, cinema, null, null, null, null);
+        bosque.setSaidas(lago, null, null, cinema, null, galpao);
+        galpao.setSaidas(null, praca, null, null, bosque, null);
+        lago.setSaidas(casaDoCebola, escola, bosque, pastelariaJuca, null, null);
+        pastelariaJuca.setSaidas(casaDaMagali, lago, cinema, praca, null, null);
 
         // o jogo comeca na delegacia
         ambienteAtual = delegacia;
@@ -191,6 +192,12 @@ public class Jogo
     {            
         imprimirBoasVindas();
         acoesJanela();
+
+        // Não permite que o usuário edite a interface
+        jogo.setEditable(false);
+        listaItens.setEditable(false);
+        inventario.setEditable(false);
+
         // Entra no loop de comando principal. Aqui nos repetidamente lemos
         // comandos e os executamos ate o jogo terminar.
                 
