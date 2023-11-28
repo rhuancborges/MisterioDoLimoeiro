@@ -15,34 +15,10 @@
  * @version 2011.07.31 (2016.02.01)
  */
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
-import javax.swing.JTextArea;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class Jogo 
 {
     private Analisador analisador;
     private Ambiente ambienteAtual;
-    private JFrame janela;
-    private JTextArea listaItens;
-    private JTextArea inventario;
-    private JTextArea jogo;
-    private JTextArea localAtual;
-    private JTextField comandos;
-    private JButton enviar;
         
     /**
      * Cria o jogo e incializa seu mapa interno.
@@ -51,94 +27,6 @@ public class Jogo
     {
         criarAmbientes();
         analisador = new Analisador();
-        janela = new JFrame("Misterio do Limoeiro");
-        montarJanela();
-        acoesJanela();
-        exibir();
-    }
-
-    public void exibir(){
-        janela.setVisible(true);
-    }
-
-    public void montarJanela(){
-        janela.setSize(1280, 720);
-        janela.setLayout(new BorderLayout());
-
-        JPanel painelSuperior = new JPanel();
-        painelSuperior.setLayout(new FlowLayout());
-        localAtual = new JTextArea();
-        localAtual.setEditable(false);
-        painelSuperior.add(localAtual);
-        
-        // O BoxLayout permite que os painéis tenham tamanho preferenciais ou fixos
-        painelSuperior.setPreferredSize(new Dimension(500, 150));
-        painelSuperior.setLayout(new BoxLayout(painelSuperior, BoxLayout.PAGE_AXIS));
-        // Cria uma margem entre os painéiss
-        EmptyBorder borderSuperior = new EmptyBorder(10, 10, 10, 10);
-        painelSuperior.setBorder(borderSuperior);
-  
-        JPanel painelEsquerda = new JPanel();
-        painelEsquerda.setLayout(new FlowLayout());
-        listaItens = new JTextArea("Lista de evidências: \n\n");
-        listaItens.setEditable(false);
-        painelEsquerda.add(listaItens);
-
-        painelEsquerda.setPreferredSize(new Dimension(300, 520));
-        painelEsquerda.setLayout(new BoxLayout(painelEsquerda, BoxLayout.PAGE_AXIS));
-        EmptyBorder borderEsquerda = new EmptyBorder(0, 10, 10, 10);
-        painelEsquerda.setBorder(borderEsquerda);
-
-        JPanel painelCentro = new JPanel();
-        painelCentro.setLayout(new FlowLayout());
-        ImageIcon imagem = new ImageIcon("./src/mapa.jpg");
-        JLabel labelImagem = new JLabel(imagem);
-        painelCentro.add(labelImagem);
-        painelCentro.setPreferredSize(new Dimension(800, 520));
-        
-        JPanel painelDireita = new JPanel();
-        painelDireita.setLayout(new FlowLayout());
-        inventario = new JTextArea("Inventário: \n\n - Mapa\n - Lupa\n - Carteira\n - Distintivo\n - Câmera\n");
-        inventario.setEditable(false);
-        painelDireita.add(inventario);
-        
-        painelDireita.setPreferredSize(new Dimension(300, 520));
-        painelDireita.setLayout(new BoxLayout(painelDireita, BoxLayout.PAGE_AXIS));
-        EmptyBorder borderDireita = new EmptyBorder(0, 10, 10, 10);
-        painelDireita.setBorder(borderDireita);
-
-        JPanel painelInferior = new JPanel();
-        painelInferior.setLayout(new BoxLayout(painelInferior, BoxLayout.Y_AXIS));
-        jogo = new JTextArea();
-        JPanel interacao = new JPanel();
-        interacao.setLayout(new BoxLayout(interacao, BoxLayout.X_AXIS));
-        comandos = new JTextField();
-        enviar = new JButton("Executar Comando");
-        interacao.add(comandos);
-        interacao.add(enviar);
-
-        EmptyBorder borderInferior = new EmptyBorder(0, 10, 10, 10);
-        painelInferior.setBorder(borderInferior);
-
-        painelInferior.add(jogo);
-        painelInferior.add(interacao);
-
-        janela.add(painelSuperior, BorderLayout.NORTH);
-        janela.add(painelEsquerda, BorderLayout.WEST);
-        janela.add(painelCentro, BorderLayout.CENTER);
-        janela.add(painelDireita, BorderLayout.EAST);
-        janela.add(painelInferior, BorderLayout.SOUTH);
-
-    }
-    
-    public void acoesJanela(){
-        enviar.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                comandos.getText();
-                comandos.setText("");
-            }
-        });
     }
 
     /* */
@@ -194,12 +82,6 @@ public class Jogo
     public void jogar() 
     {            
         imprimirBoasVindas();
-        acoesJanela();
-
-        // Não permite que o usuário edite a interface
-        jogo.setEditable(false);
-        listaItens.setEditable(false);
-        inventario.setEditable(false);
 
         // Entra no loop de comando principal. Aqui nos repetidamente lemos
         // comandos e os executamos ate o jogo terminar.
@@ -218,16 +100,16 @@ public class Jogo
     private void imprimirBoasVindas()
     {
         
-        jogo.append("\nBem-vindo, Detetive!\n");
-        jogo.append("Sou o delegado Jeremias, do bairro do Limoeiro. Você está aqui para resolver um crime que está assombrando o nosso querido bairro\n");
-        jogo.append("Infelizmente, houve um homicídio há uma semana e o assassino está à solta\n\n");
-        jogo.append("Seu objetivo é reunir provas, identificar o suspeito e voltar à delegacia com o nome do assassino\n");
-        jogo.append("Para te ajudar nessa jornada, você vai receber um mapa do bairro, uma lupa, uma carteira, um distintivo e uma câmera\n");
-        jogo.append("Explore todo o bairro e solucione o caso. Contamos com você, detetive!\n\n");
+        System.out.println("\nBem-vindo, Detetive!\n");
+        System.out.println("Sou o delegado Jeremias, do bairro do Limoeiro. Você está aqui para resolver um crime que está assombrando o nosso querido bairro\n");
+        System.out.println("Infelizmente, houve um homicídio há uma semana e o assassino está à solta\n\n");
+        System.out.println("Seu objetivo é reunir provas, identificar o suspeito e voltar à delegacia com o nome do assassino\n");
+        System.out.println("Para te ajudar nessa jornada, você vai receber um mapa do bairro, uma lupa, uma carteira, um distintivo e uma câmera\n");
+        System.out.println("Explore todo o bairro e solucione o caso. Contamos com você, detetive!\n\n");
 
-        jogo.append("Digite 'ajuda' se voce precisar de ajuda\n.");
+        System.out.println("Digite 'ajuda' se voce precisar de ajuda\n.");
         
-        localAtual.append("Você está " + ambienteAtual.getLongaDescricao() + "\n\n");
+        System.out.println("Você está " + ambienteAtual.getLongaDescricao() + "\n\n");
     }
 
     /**
@@ -281,7 +163,7 @@ public class Jogo
     private void irParaAmbiente(Comando comando) {
         if (!comando.temSegundaPalavra()) {
             // se não há segunda palavra, não sabemos para onde ir...
-            jogo.append("Ir para onde?\n");
+            System.out.println("Ir para onde?\n");
             return;
         }
     
@@ -291,10 +173,10 @@ public class Jogo
         Ambiente proxAmbiente = ambienteAtual.getSaida(direcao);
     
         if (proxAmbiente == null) {
-            jogo.append("Não há nenhum caminho!\n");
+            System.out.println("Não há nenhum caminho!\n");
         } else {
             ambienteAtual = proxAmbiente;
-            localAtual.setText("Você está " + ambienteAtual.getLongaDescricao() + "\n\n");
+            System.out.println("Você está " + ambienteAtual.getLongaDescricao() + "\n\n");
         }
     }
     
