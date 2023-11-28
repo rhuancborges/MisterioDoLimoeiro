@@ -23,24 +23,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-
-import javafx.scene.paint.Color;
 
 import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Jogo 
 {
     private Analisador analisador;
-    private String textoAtual;
     private Ambiente ambienteAtual;
     private JFrame janela;
     private JTextArea listaItens;
@@ -137,7 +131,7 @@ public class Jogo
         enviar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                textoAtual = comandos.getText();
+                comandos.getText();
                 comandos.setText("");
             }
         });
@@ -173,18 +167,18 @@ public class Jogo
 
         // ARRUMAR SAÍDAS
         // inicializa as saidas dos ambientes
-        delegacia.setSaidas(null, praca, null, null);
-        praca.setSaidas(null, praca, null, null);
-        casaDaMagali.setSaidas(null, praca, null, null);
-        casaDaMonica.setSaidas(null, praca, null, null);
-        casaDoCebola.setSaidas(null, praca, null, null);
-        escola.setSaidas(null, praca, null, null);
-        cinema.setSaidas(null, praca, null, null);
-        padaria.setSaidas(null, praca, null, null);
-        bosque.setSaidas(null, praca, null, null);
-        galpao.setSaidas(null, praca, null, null);
-        lago.setSaidas(null, praca, null, null);
-        pastelariaJuca.setSaidas(null, praca, null, null);
+        delegacia.setSaidas(null, praca, null, null, null, null);
+        praca.setSaidas(casaDaMonica, lago, null, delegacia, null, null);
+        casaDaMagali.setSaidas(null, praca, null, null,null, null);
+        casaDaMonica.setSaidas(null, praca, null, null, null, null);
+        casaDoCebola.setSaidas(null, praca, null, null, null, null);
+        escola.setSaidas(null, praca, null, null, null, null);
+        cinema.setSaidas(null, praca, null, null, null, null);
+        padaria.setSaidas(null, praca, null, null, null, null);
+        bosque.setSaidas(null, praca, null, null, null, null);
+        galpao.setSaidas(null, praca, null, null, null, null);
+        lago.setSaidas(null, praca, null, null, null, null);
+        pastelariaJuca.setSaidas(null, praca, null, null, null, null);
 
         // o jogo comeca na delegacia
         ambienteAtual = delegacia;
@@ -202,7 +196,7 @@ public class Jogo
                 
         boolean terminado = false;
         while (! terminado) {
-            Comando comando = analisador.pegarComando(textoAtual);
+            Comando comando = analisador.pegarComando();
             terminado = processarComando(comando);
         }
         System.out.println("Obrigado por jogar. Até mais!");

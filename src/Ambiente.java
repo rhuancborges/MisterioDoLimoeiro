@@ -55,12 +55,14 @@ public class Ambiente
      * @param sul A saida sul.
      * @param oeste A saida oeste.
      */
-    public void setSaidas(Ambiente vizinhoNorte, Ambiente vizinhoLeste, Ambiente vizinhoSul, Ambiente vizinhoOeste) 
+    public void setSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste, Ambiente cima, Ambiente baixo) 
     {
-        saidas.put("norte", vizinhoNorte);
-        saidas.put("leste", vizinhoSul);
-        saidas.put("sul", vizinhoLeste);
-        saidas.put("oeste", vizinhoOeste);
+        saidas.put("norte", norte);
+        saidas.put("leste", leste);
+        saidas.put("sul", sul);
+        saidas.put("oeste", oeste);
+        saidas.put("cima", cima);
+        saidas.put("baixo", baixo);
     }
 
     /**
