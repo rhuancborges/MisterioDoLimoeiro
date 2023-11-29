@@ -1,3 +1,4 @@
+
 /**
  * Classe Ambiente - um ambiente em um jogo adventure.
  *
@@ -14,13 +15,10 @@
  * @version 2011.07.31 (2016.02.01)
  */
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-public class Ambiente 
-{
+public class Ambiente {
     private String nome;
     private String descricao;
     private Map<String, Ambiente> saidas;
@@ -34,29 +32,28 @@ public class Ambiente
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "um jardim aberto".
+     * 
      * @param descricao A descricao do ambiente.
      */
-    public Ambiente(String descricao, String nomePersonagem, String nomeItem) {
-        this.descricao = descricao;
+    public Ambiente(String nome, String descricao, Personagem personagem, Item item) {
         saidas = new HashMap<>();
-        if (!nomePersonagem.equals("")){
-            npc = new Personagem(nomePersonagem);
-        }
-        if (!nomeItem.equals("")){
-            item = new Item();
-        }
+
+        this.nome = nome;
+        this.descricao = descricao;
+        this.npc = personagem;
+        this.item = item; // IMPLEMENTARR!!!!!!!!
     }
 
     /**
      * Define as saidas do ambiente. Cada direcao ou leva a um
      * outro ambiente ou eh null (nenhuma saida para la).
+     * 
      * @param norte A saida norte.
      * @param leste A saida leste.
-     * @param sul A saida sul.
+     * @param sul   A saida sul.
      * @param oeste A saida oeste.
      */
-    public void setSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste, Ambiente cima, Ambiente baixo) 
-    {
+    public void setSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste, Ambiente cima, Ambiente baixo) {
         saidas.put("norte", norte);
         saidas.put("leste", leste);
         saidas.put("sul", sul);
@@ -66,26 +63,66 @@ public class Ambiente
     }
 
     /**
+     * @return O nome do ambiente.
+     */
+
+    public String getNome() {
+        return nome;
+    }
+
+    /**
      * @return A descricao do ambiente.
      */
-    public String getPequenaDescricao(){
+    public String getPequenaDescricao() {
         return descricao;
     }
 
-    public String getLongaDescricao(){
-        return descricao + ".\n" + getStringSaida();
+    /**
+     * @return A descricao completa do ambiente e suas saidas.
+     */
+
+    public String getLongaDescricao() {
+        String retornoDescricao = "Você está " + descricao + ".\n" + getStringSaida() + "\n";
+        if (npc != null) {
+            retornoDescricao += "Você também vê " + npc.getNome() + " e observa que " + npc.getNome() + " é "
+                    + npc.getDescricao() + ".\n";
+        } else {
+            retornoDescricao += "Não há ninguém aqui.\n";
+        }
+        return retornoDescricao;
     }
 
-    private String getStringSaida(){
+    /**
+     * @return A lista de saídas com o lugar que levam. Ex.: oeste: cozinha leste:
+     *         Não há saída
+     */
+
+    private String getStringSaida() {
         String returnString = "Saídas: ";
-        Set<String> chaves = saidas.keySet();
-        for(String saida : chaves){
-            returnString += " " + saida;
+        for (Map.Entry<String, Ambiente> item : saidas.entrySet()) {
+            if (item.getValue() != null) {
+                returnString += "\n " + item.getKey() + ": " + item.getValue().getNome();
+            } else {
+                returnString += "\n " + item.getKey() + ": " + "Não há saída";
+            }
         }
         return returnString;
     }
 
-    public Ambiente getSaida(String direcao){
+    /**
+     * @return O personagem do ambiente.
+     */
+
+    public Personagem getPersonagem() {
+        return npc;
+    }
+
+    /**
+     * @return O Ambiente que uma direção leva (ou null se não houver saída nessa
+     *         direção).
+     */
+
+    public Ambiente getSaida(String direcao) {
         return saidas.get(direcao);
     }
 
