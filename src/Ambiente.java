@@ -35,12 +35,13 @@ public class Ambiente {
      * 
      * @param descricao A descricao do ambiente.
      */
-    public Ambiente(String nome, String descricao, Personagem personagem, Item item) {
+    public Ambiente(String nome, String descricao, Item item, String nomePersonagem, String descricaoPersonagem,
+            String falaInicial, String falaFinal) {
         saidas = new HashMap<>();
 
         this.nome = nome;
         this.descricao = descricao;
-        this.npc = personagem;
+        this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal);
         this.item = item; // IMPLEMENTARR!!!!!!!!
     }
 
@@ -124,6 +125,40 @@ public class Ambiente {
 
     public Ambiente getSaida(String direcao) {
         return saidas.get(direcao);
+    }
+
+    // ======================================PERSONAGENS======================================
+
+    /**
+     * @return O nome do personagem do ambiente.
+     */
+
+    public String getNomePersonagem() {
+        return npc.getNome();
+    }
+
+    /**
+     * @return A descrição do personagem do ambiente.
+     */
+
+    public String getDescricaoPersonagem() {
+        return npc.getDescricao();
+    }
+
+    /**
+     * @return A fala inicial do personagem do ambiente.
+     */
+
+    public String getFalaInicialPersonagem() {
+        return npc.getFalaInicial();
+    }
+
+    /**
+     * @return A fala final do personagem do ambiente.
+     */
+
+    public String getFalaFinalPersonagem() {
+        return npc.getFalaFinal();
     }
 
 }

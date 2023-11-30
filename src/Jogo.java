@@ -15,35 +15,31 @@ public class Jogo {
 
         // cria os ambientes
 
-        // PREPARANDO OS PERSONAGENS
-        // Descrição do personagem deve seguir a frase: "e você observa que <nome> é
-        // <descrição>"
-        jeremias = new Personagem("Jeremias", "Alto, magro, cabelo preto, olhos castanhos, usa óculos",
-                "Olá, sou o Jeremias, o delegado da cidade. Estou investigando o desaparecimento do Cebola e por isso chamamos você, para que nos ajude com a busca.",
-                "Obrigado por me ajudar a encontrar o Cebola. Você é um ótimo detetive!");
-        quinzinho = new Personagem("Quinzinho", "o quinzinho", "Olá, sou o Quinzinho", "Tchau");
-        franjinha = new Personagem("Franjinha", "o franjinha", "Olá, sou o Franjinha", "Tchau");
-        monica = new Personagem("Mônica", "a Mônica", "Olá, sou a Mônica", "Tchau");
-        magali = new Personagem("Magali", "a Magali", "Olá, sou a Magali", "Tchau");
-        cascao = new Personagem("Cascão", "o Cascão", "Olá, sou o Cascão", "Tchau");
-        marina = new Personagem("Marina", "a Marina", "Olá, sou a Marina", "Tchau");
-        juca = new Personagem("Juca", "o Juca", "Olá, sou o Juca", "Tchau");
-        denise = new Personagem("Denise", "a Denise", "Olá, sou a Denise", "Tchau");
-
         // COMPLETAR COM ITENS
 
-        delegacia = new Ambiente("Delegacia", "Você está na delegacia", jeremias, null);
-        praca = new Ambiente("Praca", "Você está na praça central", denise, null);
-        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", magali, null);
-        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", monica, null);
-        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", cascao, null);
-        escola = new Ambiente("Escola", "Você está na escola", marina, null);
-        cinema = new Ambiente("Cinema", "Você está no cinema", franjinha, null);
-        padaria = new Ambiente("Padaria", "Você está na padaria", quinzinho, null);
-        bosque = new Ambiente("Bosque", "Você está no bosque", null, null);
-        galpao = new Ambiente("Galpão", "Você está no galpão", null, null);
-        lago = new Ambiente("Lago", "Você está em frente ao lago", null, null);
-        pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", juca, null);
+        delegacia = new Ambiente("Delegacia", "Você está na delegacia", null, "Jeremias",
+                "Alto, magro, cabelo preto, olhos castanhos, usa óculos",
+                "Olá, sou o Jeremias, o delegado da cidade. Estou investigando o desaparecimento do Cebola e por isso chamamos você, para que nos ajude com a busca.",
+                "Obrigado por me ajudar a encontrar o Cebola. Você é um ótimo detetive!");
+        praca = new Ambiente("Praca", "Você está na praça central", null, "Denise", "a Denise", "Olá, sou a Denise",
+                "Tchau");
+        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", null, "Magali", "a Magali",
+                "Olá, sou a Magali", "Tchau");
+        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica", "a Mônica",
+                "Olá, sou a Mônica", "Tchau");
+        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", null, "Cascão", "o Cascão",
+                "Olá, sou o Cascão", "Tchau");
+        escola = new Ambiente("Escola", "Você está na escola", null, "Marina", "a Marina", "Olá, sou a Marina",
+                "Tchau");
+        cinema = new Ambiente("Cinema", "Você está no cinema", null, "Franjinha", "o franjinha", "Olá, sou o Franjinha",
+                "Tchau");
+        padaria = new Ambiente("Padaria", "Você está na padaria", null, "Quinzinho", "o quinzinho",
+                "Olá, sou o Quinzinho", "Tchau");
+        bosque = new Ambiente("Bosque", "Você está no bosque", null, null, null, null, null);
+        galpao = new Ambiente("Galpao", "Você está no galpão", null, null, null, null, null);
+        lago = new Ambiente("Lago", "Você está em frente ao lago", null, null, null, null, null);
+        pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", null, "Juca", "o Juca",
+                "Olá, sou o Juca", "Tchau");
 
         // ARRUMAR SAÍDAS
         // inicializa as saidas dos ambientes
@@ -197,8 +193,7 @@ public class Jogo {
     private void conversarComPersonagem() {
         // Adicionar a lógica do item - Se um dado item estiver no inventário, o
         // personagem tem uma fala diferente
-        Personagem npcLocal = ambienteAtual.getPersonagem();
-        System.out.println(npcLocal.getFalaInicial());
+        System.out.println(ambienteAtual.getFalaInicialPersonagem());
     }
 
     /**
