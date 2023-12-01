@@ -1,17 +1,27 @@
+import itens.Inventario;
+import itens.Item;
+
 public class Jogo {
     private Analisador analisador;
     private Ambiente ambienteAtual;
+    private Inventario inventario;
 
     public Jogo() {
         analisador = new Analisador();
+        inventario = new Inventario();
         criarAmbientes();
         gerarComandos();
+        gerarInventarioInicial();
     }
 
     private void criarAmbientes() {
         Ambiente delegacia, praca, casaDaMonica, casaDaMagali, casaDoCebola, escola, cinema,
                 padaria, bosque, galpao, lago, pastelariaJuca;
-        Personagem jeremias, quinzinho, franjinha, monica, magali, cascao, marina, juca, denise;
+
+        Item faca, corda, caderno;
+        faca = new Item("faca", "Uma faca de cozinha cheia de sangue");
+        corda = new Item("corda", "Uma corda de escalada");
+        caderno = new Item("caderno", "Um caderno com anotações");
 
         // cria os ambientes
 
@@ -27,18 +37,20 @@ public class Jogo {
                 "Olá, sou a Magali", "Tchau");
         casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica", "a Mônica",
                 "Olá, sou a Mônica", "Tchau");
-        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", null, "Cascão", "o Cascão",
+        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", corda, "Cascão", "o Cascão",
                 "Olá, sou o Cascão", "Tchau");
         escola = new Ambiente("Escola", "Você está na escola", null, "Marina", "a Marina", "Olá, sou a Marina",
                 "Tchau");
-        cinema = new Ambiente("Cinema", "Você está no cinema", null, "Franjinha", "o franjinha", "Olá, sou o Franjinha",
+        cinema = new Ambiente("Cinema", "Você está no cinema", null, "Franjinha", "o franjinha",
+                "Olá, sou o Franjinha",
                 "Tchau");
         padaria = new Ambiente("Padaria", "Você está na padaria", null, "Quinzinho", "o quinzinho",
                 "Olá, sou o Quinzinho", "Tchau");
-        bosque = new Ambiente("Bosque", "Você está no bosque", null, null, null, null, null);
+        bosque = new Ambiente("Bosque", "Você está no bosque", faca, null, null, null, null);
         galpao = new Ambiente("Galpao", "Você está no galpão", null, null, null, null, null);
         lago = new Ambiente("Lago", "Você está em frente ao lago", null, null, null, null, null);
-        pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", null, "Juca", "o Juca",
+        pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", null, "Juca",
+                "o Juca",
                 "Olá, sou o Juca", "Tchau");
 
         // ARRUMAR SAÍDAS
@@ -64,14 +76,33 @@ public class Jogo {
      * Define os comandos que são conhecidos.
      */
 
-    private void gerarComandos() {
+    private void gerarComandos() { // ADICIONAR DESCRIÇÃO DOS COMANDOS
         analisador.definirComando("ajuda");
         analisador.definirComando("ir");
         analisador.definirComando("observar");
         analisador.definirComando("conversar");
-        // analisador.definirComando("olhar com lupa");
+        analisador.definirComando("procurar");
+        analisador.definirComando("inventario");
         // analisador.definirComando("pegar");
         analisador.definirComando("sair");
+    }
+
+    /*
+     * Define os itens que o protagonista possui no inicio do jogo.
+     */
+
+    private void gerarInventarioInicial() { // COLOCAR TODAS AQUI COMO FERRAMENTAS
+        Item lupa, mapa, carteira, distintivo, camera;
+        lupa = new Item("lupa", "Uma lupa de detetive");
+        mapa = new Item("mapa", "Um mapa da cidade");
+        carteira = new Item("carteira", "A carteira do detetive");
+        distintivo = new Item("distintivo", "O distintivo do detetive");
+        camera = new Item("camera", "A camera do detetive");
+        inventario.adicionarItem(lupa);
+        inventario.adicionarItem(mapa);
+        inventario.adicionarItem(carteira);
+        inventario.adicionarItem(distintivo);
+        inventario.adicionarItem(camera);
     }
 
     /*
@@ -127,6 +158,10 @@ public class Jogo {
             observar();
         else if (palavraDeComando.equals("conversar"))
             conversarComPersonagem();
+        else if (palavraDeComando.equals("procurar"))
+            procurarComLupa();
+        else if (palavraDeComando.equals("inventario"))
+            checarInventario();
         /*
          * else if (palavraDeComando.equals("olhar com a lupa"))
          * olharComALupa();
@@ -194,6 +229,33 @@ public class Jogo {
         // Adicionar a lógica do item - Se um dado item estiver no inventário, o
         // personagem tem uma fala diferente
         System.out.println(ambienteAtual.getFalaInicialPersonagem());
+    }
+
+    /**
+     * Olha com a lupa o ambiente atual.
+     */
+
+    private void procurarComLupa() {
+        if (inventario.contemItem("lupa")) { // Caso venha a ser implentado algo em que o protagonista perde a lupa
+            System.out.println("Você olha com a lupa e vê: ");
+            Item item = ambienteAtual.getItem();
+
+            if (item != null) {
+                System.out.println(item.getDescricao());
+            } else {
+                System.out.println("Não há nada aqui!");
+            }
+        } else {
+            System.out.println("Você não tem uma lupa para olhar!");
+        }
+    }
+
+    /**
+     * Checa o inventário do protagonista.
+     */
+
+    private void checarInventario() {
+        System.out.println(inventario.getItens());
     }
 
     /**

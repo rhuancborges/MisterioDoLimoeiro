@@ -18,6 +18,8 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import itens.Item;
+
 public class Ambiente {
     private String nome;
     private String descricao;
@@ -41,7 +43,11 @@ public class Ambiente {
 
         this.nome = nome;
         this.descricao = descricao;
-        this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal);
+        if (nomePersonagem == null) {
+            this.npc = null;
+        } else {
+            this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal);
+        }
         this.item = item; // IMPLEMENTARR!!!!!!!!
     }
 
@@ -85,7 +91,7 @@ public class Ambiente {
     public String getLongaDescricao() {
         String retornoDescricao = "Você está " + descricao + ".\n" + getStringSaida() + "\n";
         if (npc != null) {
-            retornoDescricao += "Você também vê " + npc.getNome() + " e observa que " + npc.getNome() + " é "
+            retornoDescricao += "Você também vê " + npc.getNome() + " e observa " + npc.getNome()
                     + npc.getDescricao() + ".\n";
         } else {
             retornoDescricao += "Não há ninguém aqui.\n";
@@ -134,7 +140,10 @@ public class Ambiente {
      */
 
     public String getNomePersonagem() {
-        return npc.getNome();
+        if (npc != null) {
+            return npc.getNome();
+        }
+        return "Não há ninguém aqui";
     }
 
     /**
@@ -142,7 +151,10 @@ public class Ambiente {
      */
 
     public String getDescricaoPersonagem() {
-        return npc.getDescricao();
+        if (npc != null) {
+            return npc.getDescricao();
+        }
+        return "Não há ninguém aqui";
     }
 
     /**
@@ -150,7 +162,10 @@ public class Ambiente {
      */
 
     public String getFalaInicialPersonagem() {
-        return npc.getFalaInicial();
+        if (npc != null) {
+            return npc.getFalaInicial();
+        }
+        return "Não há ninguem aqui para conversar";
     }
 
     /**
@@ -158,7 +173,19 @@ public class Ambiente {
      */
 
     public String getFalaFinalPersonagem() {
-        return npc.getFalaFinal();
+        if (npc != null) {
+            return npc.getFalaFinal();
+        }
+        return "Não há ninguem aqui para conversar";
     }
 
+    // ======================================ITENS======================================
+
+    /**
+     * @return O nome do item do ambiente.
+     */
+
+    public Item getItem() {
+        return item;
+    }
 }
