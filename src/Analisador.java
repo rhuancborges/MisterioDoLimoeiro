@@ -55,8 +55,8 @@ public class Analisador {
         }
     }
 
-    public void mostrarComandos() {
-        palavrasDeComando.getComandos();
+    public String mostrarComandos() {
+        return palavrasDeComando.getComandos();
     }
 
     public void definirComando(String comando) {

@@ -118,18 +118,20 @@ public class Jogo {
         tela.exibir(this);  
     }
 
-    public boolean receberComando(String c){
+    public void receberComando(String c){
         Comando comando = analisador.pegarComando(c);
-        return processarComando(comando);
+        if(processarComando(comando)){
+            tela.fecharJanela();
+        }
     }
 
     private void imprimirBoasVindas() {
-        System.out.println();
-        System.out.println("Bem-vindo ao Mundo de Mônica Jovem!");
-        System.out.println("Mônica Jovem é um jogo de aventura, incrivelmente chato.");
-        System.out.println("Digite 'ajuda' se voce precisar de ajuda.");
-        System.out.println();
-        System.out.println(ambienteAtual.getPequenaDescricao());
+        
+        tela.adicionarNaTela("Bem-vindo ao Mundo de Mônica Jovem!");
+        tela.adicionarNaTela("Mônica Jovem é um jogo de aventura, incrivelmente chato.");
+        tela.adicionarNaTela("Digite 'ajuda' se voce precisar de ajuda.");
+        tela.adicionarNaTela(" ");
+        tela.adicionarNaTela(ambienteAtual.getPequenaDescricao());
 
     }
 
@@ -145,7 +147,7 @@ public class Jogo {
         boolean querSair = false;
 
         if (comando.ehDesconhecido()) {
-            System.out.println("Comando desconhecido...01 Por favor insira um comando válido!");
+            tela.adicionarNaTela("Comando desconhecido...01 Por favor insira um comando válido!");
             return false;
         }
 
@@ -171,7 +173,7 @@ public class Jogo {
         else if (palavraDeComando.equals("sair"))
             querSair = sair(comando);
         else
-            System.out.println("Comando desconhecido... Por favor insira um comando válido!");
+            tela.adicionarNaTela("Comando desconhecido... Por favor insira um comando válido!");
 
         return querSair;
     }
@@ -181,10 +183,10 @@ public class Jogo {
      */
 
     private void imprimirAjuda() {
-        System.out.println();
-        System.out.println("Suas palavras de comando sao:");
-        analisador.mostrarComandos();
-        System.out.println(ambienteAtual.getPequenaDescricao());
+        tela.adicionarNaTela(" ");
+        tela.adicionarNaTela("Suas palavras de comando sao:");
+        tela.adicionarNaTela(analisador.mostrarComandos());
+        tela.adicionarNaTela(ambienteAtual.getPequenaDescricao());
     }
 
     /**
@@ -196,7 +198,7 @@ public class Jogo {
     private void irParaAmbiente(Comando comando) {
         if (!comando.temSegundaPalavra()) {
             // se nao ha segunda palavra, nao sabemos pra onde ir...
-            System.out.println("Ir para onde? Informe novamente...");
+            tela.adicionarNaTela("Ir para onde? Informe novamente...");
             return;
         }
 
@@ -206,10 +208,10 @@ public class Jogo {
         Ambiente proximoAmbiente = ambienteAtual.getSaida(direcao);
 
         if (proximoAmbiente == null)
-            System.out.println("Nao ha passagem!");
+            tela.adicionarNaTela("Nao ha passagem!");
         else {
             ambienteAtual = proximoAmbiente;
-            ambienteAtual.getLongaDescricao();
+            tela.adicionarNaTela(ambienteAtual.getLongaDescricao());
         }
     }
 
@@ -218,7 +220,7 @@ public class Jogo {
      */
 
     private void observar() {
-        System.out.println(ambienteAtual.getLongaDescricao());
+        tela.adicionarNaTela(ambienteAtual.getLongaDescricao());
     }
 
     /**
@@ -228,7 +230,7 @@ public class Jogo {
     private void conversarComPersonagem() {
         // Adicionar a lógica do item - Se um dado item estiver no inventário, o
         // personagem tem uma fala diferente
-        System.out.println(ambienteAtual.getFalaInicialPersonagem());
+        tela.adicionarNaTela(ambienteAtual.getFalaInicialPersonagem());
     }
 
     /**
@@ -237,16 +239,16 @@ public class Jogo {
 
     private void procurarComLupa() {
         if (inventario.contemItem("lupa")) { // Caso venha a ser implentado algo em que o protagonista perde a lupa
-            System.out.println("Você olha com a lupa e vê: ");
+            tela.adicionarNaTela("Você olha com a lupa e vê: ");
             Item item = ambienteAtual.getItem();
 
             if (item != null) {
-                System.out.println(item.getDescricao());
+                tela.adicionarNaTela(item.getDescricao());
             } else {
-                System.out.println("Não há nada aqui!");
+                 tela.adicionarNaTela("Não há nada aqui!");
             }
         } else {
-            System.out.println("Você não tem uma lupa para olhar!");
+             tela.adicionarNaTela("Você não tem uma lupa para olhar!");
         }
     }
 
@@ -255,7 +257,7 @@ public class Jogo {
      */
 
     private void checarInventario() {
-        System.out.println(inventario.getItens());
+        tela.adicionarNaTela(inventario.getItens());
     }
 
     /**
@@ -266,7 +268,7 @@ public class Jogo {
 
     private boolean sair(Comando comando) {
         if (comando.temSegundaPalavra()) {
-            System.out.println("Sair o que?");
+             tela.adicionarNaTela("Sair o que?");
             return false;
         } else
             return true; // sinaliza que quer sair

@@ -46,10 +46,11 @@ public class PalavrasComando {
         return false;
     }
 
-    public void getComandos() {
+    public String getComandos() {
+        String retorna = "";
         for (String comando : comandosValidos) {
-            System.out.println(comando + "  ");
+            retorna += comando + "\n";
         }
-        System.out.println();
+        return retorna;
     }
 }

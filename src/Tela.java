@@ -55,7 +55,7 @@ public class Tela
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(comandos.getText());
-                boolean a = jogo.receberComando(comandos.getText());
+                jogo.receberComando(comandos.getText());
                 comandos.setText("");
             }
         });
@@ -110,5 +110,11 @@ public class Tela
        janela.add(painelInferior, BorderLayout.SOUTH);
    }
    
+   public void fecharJanela(){
+        janela.setVisible(false);
+   }
 
+   public void adicionarNaTela(String s){
+        jogo.append(s + "\n");
+   }
 }
