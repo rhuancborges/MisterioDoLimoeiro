@@ -6,6 +6,7 @@ public class Programa {
 		Jogo jogo = new Jogo();
 
 		jogo.jogar();
+
 	}
 
 }

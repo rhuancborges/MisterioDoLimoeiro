@@ -5,6 +5,7 @@ public class Jogo {
     private Analisador analisador;
     private Ambiente ambienteAtual;
     private Inventario inventario;
+    private Tela tela;
 
     public Jogo() {
         analisador = new Analisador();
@@ -12,6 +13,7 @@ public class Jogo {
         criarAmbientes();
         gerarComandos();
         gerarInventarioInicial();
+        tela = new Tela();
     }
 
     private void criarAmbientes() {
@@ -111,16 +113,14 @@ public class Jogo {
 
     public void jogar() {
         imprimirBoasVindas();
-
         // Entra no loop principal. Aqui nos repetidamente lemos comandos e
         // os executamos ate o jogo terminar.
+        tela.exibir(this);  
+    }
 
-        boolean terminado = false;
-        while (!terminado) {
-            Comando comando = analisador.pegarComando();
-            terminado = processarComando(comando);
-        }
-        System.out.println("Obrigado por jogar.  Ate mais!");
+    public boolean receberComando(String c){
+        Comando comando = analisador.pegarComando(c);
+        return processarComando(comando);
     }
 
     private void imprimirBoasVindas() {
