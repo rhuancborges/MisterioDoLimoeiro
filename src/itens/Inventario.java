@@ -1,6 +1,8 @@
 package itens;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Inventario {
     private ArrayList<Item> itens;
@@ -42,5 +44,15 @@ public class Inventario {
             }
         }
         return null;
+    }
+
+    public List<Evidencia> getEvidencias() {
+        ArrayList<Evidencia> evidencias = new ArrayList<Evidencia>();
+        for (Item item : itens) {
+            if (item instanceof Evidencia) {
+                evidencias.add((Evidencia) item);
+            }
+        }
+        return Collections.unmodifiableList(evidencias);
     }
 }

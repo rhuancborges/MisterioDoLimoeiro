@@ -17,8 +17,10 @@
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import itens.Item;
+import itens.Evidencia;
 
 public class Ambiente {
     private String nome;
@@ -38,7 +40,7 @@ public class Ambiente {
      * @param descricao A descricao do ambiente.
      */
     public Ambiente(String nome, String descricao, Item item, String nomePersonagem, String descricaoPersonagem,
-            String falaInicial, String falaFinal) {
+            String falaInicial, String falaFinal, Evidencia evidenciaQueAfeta, boolean assassino) {
         saidas = new HashMap<>();
 
         this.nome = nome;
@@ -46,7 +48,8 @@ public class Ambiente {
         if (nomePersonagem == null) {
             this.npc = null;
         } else {
-            this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal);
+            this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal, evidenciaQueAfeta,
+                    assassino);
         }
         this.item = item; // IMPLEMENTARR!!!!!!!!
     }
@@ -161,22 +164,21 @@ public class Ambiente {
      * @return A fala inicial do personagem do ambiente.
      */
 
-    public String getFalaInicialPersonagem() {
+    public String getFalaPersonagem() {
         if (npc != null) {
-            return npc.getFalaInicial();
+            return npc.getFalaAtual();
         }
         return "Não há ninguem aqui para conversar";
     }
 
     /**
-     * @return A fala final do personagem do ambiente.
+     * @return Define se a fala do personagem deve ser alterada
      */
 
-    public String getFalaFinalPersonagem() {
+    public void afetaFalaPersonagem(List<Evidencia> evidencias) {
         if (npc != null) {
-            return npc.getFalaFinal();
+            npc.afetaFala(evidencias);
         }
-        return "Não há ninguem aqui para conversar";
     }
 
     // ======================================ITENS======================================
@@ -187,5 +189,17 @@ public class Ambiente {
 
     public Item getItem() {
         return item;
+    }
+
+    /**
+     * Remove o item do ambiente.
+     * 
+     * @return O item removido.
+     */
+
+    public Item removerItem() {
+        Item itemRemovido = item;
+        item = null;
+        return itemRemovido;
     }
 }
