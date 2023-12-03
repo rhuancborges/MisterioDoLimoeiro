@@ -1,18 +1,12 @@
-
 /**
- * Classe Ambiente - um ambiente em um jogo adventure.
+ * Classe Ambiente - representa um ambiente no jogo de detetive "Mistério do Limoeiro".
  *
- * Esta classe eh parte da aplicacao "World of Zuul".
- * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.  
+ * Um "Ambiente" representa uma localização no cenário do jogo, conectado a outros ambientes por meio de saídas.
+ * Cada saída é nomeada como norte, sul, leste, oeste, cima e baixo. Para cada direção, o ambiente guarda uma referência
+ * para o ambiente vizinho ou null se não houver saída naquela direção.
  *
- * Um "Ambiente" representa uma localizacao no cenario do jogo. Ele eh
- * conectado aos outros ambientes atraves de saidas. As saidas sao
- * nomeadas como norte, sul, leste e oeste. Para cada direcao, o ambiente
- * guarda uma referencia para o ambiente vizinho, ou null se nao ha
- * saida naquela direcao.
- * 
- * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
- * @version 2011.07.31 (2016.02.01)
+ * @author José Airton Rios, Lara Ramos Linhares
+ * @version 1.0
  */
 
 import java.util.HashMap;
@@ -28,14 +22,15 @@ public class Ambiente {
     private Item item;
 
     /**
-     * Cria um ambiente com a "descricao" passada. Inicialmente, ele
-     * nao tem saidas. "descricao" eh algo como "uma cozinha" ou
-     * "
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "um jardim aberto".
-     * 
-     * @param descricao A descricao do ambiente.
+     * Cria um ambiente com o nome, descrição, item, nome do personagem, descrição do personagem, fala inicial e final fornecidos.
+     *
+     * @param nome O nome do ambiente.
+     * @param descricao A descrição do ambiente.
+     * @param item O item presente no ambiente.
+     * @param nomePersonagem O nome do personagem no ambiente.
+     * @param descricaoPersonagem A descrição do personagem no ambiente.
+     * @param falaInicial A fala inicial do personagem no ambiente.
+     * @param falaFinal A fala final do personagem no ambiente.
      */
     public Ambiente(String nome, String descricao, Item item, String nomePersonagem, String descricaoPersonagem,
             String falaInicial, String falaFinal) {
@@ -48,17 +43,18 @@ public class Ambiente {
         } else {
             this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal);
         }
-        this.item = item; // IMPLEMENTARR!!!!!!!!
+        this.item = item;
     }
 
     /**
-     * Define as saidas do ambiente. Cada direcao ou leva a um
-     * outro ambiente ou eh null (nenhuma saida para la).
-     * 
-     * @param norte A saida norte.
-     * @param leste A saida leste.
-     * @param sul   A saida sul.
-     * @param oeste A saida oeste.
+     * Define as saídas do ambiente para diferentes direções.
+     *
+     * @param norte A saída para o norte.
+     * @param leste A saída para o leste.
+     * @param sul A saída para o sul.
+     * @param oeste A saída para o oeste.
+     * @param cima A saída para cima.
+     * @param baixo A saída para baixo.
      */
     public void setSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste, Ambiente cima, Ambiente baixo) {
         saidas.put("norte", norte);
@@ -72,22 +68,20 @@ public class Ambiente {
     /**
      * @return O nome do ambiente.
      */
-
     public String getNome() {
         return nome;
     }
 
     /**
-     * @return A descricao do ambiente.
+     * @return A descrição do ambiente.
      */
     public String getPequenaDescricao() {
         return descricao;
     }
 
     /**
-     * @return A descricao completa do ambiente e suas saidas.
+     * @return A descrição completa do ambiente, incluindo suas saídas e a presença de personagens.
      */
-
     public String getLongaDescricao() {
         String retornoDescricao = "Você está " + descricao + ".\n" + getStringSaida() + "\n";
         if (npc != null) {
@@ -100,10 +94,8 @@ public class Ambiente {
     }
 
     /**
-     * @return A lista de saídas com o lugar que levam. Ex.: oeste: cozinha leste:
-     *         Não há saída
+     * @return Uma representação textual das saídas disponíveis no ambiente.
      */
-
     private String getStringSaida() {
         String returnString = "Saídas: ";
         for (Map.Entry<String, Ambiente> item : saidas.entrySet()) {
@@ -117,18 +109,16 @@ public class Ambiente {
     }
 
     /**
-     * @return O personagem do ambiente.
+     * @return O personagem presente no ambiente.
      */
-
     public Personagem getPersonagem() {
         return npc;
     }
 
     /**
-     * @return O Ambiente que uma direção leva (ou null se não houver saída nessa
-     *         direção).
+     * @param direcao A direção desejada.
+     * @return O ambiente para o qual a direção leva (ou null se não houver saída nessa direção).
      */
-
     public Ambiente getSaida(String direcao) {
         return saidas.get(direcao);
     }
@@ -136,9 +126,8 @@ public class Ambiente {
     // ======================================PERSONAGENS======================================
 
     /**
-     * @return O nome do personagem do ambiente.
+     * @return O nome do personagem presente no ambiente.
      */
-
     public String getNomePersonagem() {
         if (npc != null) {
             return npc.getNome();
@@ -147,9 +136,8 @@ public class Ambiente {
     }
 
     /**
-     * @return A descrição do personagem do ambiente.
+     * @return A descrição do personagem presente no ambiente.
      */
-
     public String getDescricaoPersonagem() {
         if (npc != null) {
             return npc.getDescricao();
@@ -158,34 +146,32 @@ public class Ambiente {
     }
 
     /**
-     * @return A fala inicial do personagem do ambiente.
+     * @return A fala inicial do personagem presente no ambiente.
      */
-
     public String getFalaInicialPersonagem() {
         if (npc != null) {
             return npc.getFalaInicial();
         }
-        return "Não há ninguem aqui para conversar";
+        return "Não há ninguém aqui para conversar";
     }
 
     /**
-     * @return A fala final do personagem do ambiente.
+     * @return A fala final do personagem presente no ambiente.
      */
-
     public String getFalaFinalPersonagem() {
         if (npc != null) {
             return npc.getFalaFinal();
         }
-        return "Não há ninguem aqui para conversar";
+        return "Não há ninguém aqui para conversar";
     }
 
     // ======================================ITENS======================================
 
     /**
-     * @return O nome do item do ambiente.
+     * @return O item presente no ambiente.
      */
-
     public Item getItem() {
         return item;
     }
 }
+
