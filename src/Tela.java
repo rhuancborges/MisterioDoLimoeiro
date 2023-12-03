@@ -12,15 +12,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Dimension;
+
 
 
 public class Tela {
@@ -72,11 +73,24 @@ public class Tela {
           painelEsquerda.add(listaItens);
 
           /*
+          * Este trecho de código configura o painelEsquerda.
+          * 
+          * painelEsquerda é um componente de contêiner JPanel que 
+          * está sendo configurado com um tamanho preferencial de 300x150 pixels, 
+          * um layout BoxLayout (caixa) com orientação PAGE_AXIS (vertical), e uma
+          * borda vazia com margens de 10 pixels em todos os lados.
+          */
+          painelEsquerda.setPreferredSize(new Dimension(300, 150));
+          painelEsquerda.setLayout(new BoxLayout(painelEsquerda, BoxLayout.PAGE_AXIS));
+          EmptyBorder borderLateral = new EmptyBorder(10, 10, 10, 10);
+          painelEsquerda.setBorder(borderLateral);
+
+          /*
            * No centro, fica uma imagem mostrando o mapa do jogo
            */
           JPanel painelCentro = new JPanel();
           painelCentro.setLayout(new FlowLayout());
-          ImageIcon imagem = new ImageIcon("./mapa.jpg");
+          ImageIcon imagem = new ImageIcon("./MisterioDoLimoeiro/src/mapa.jpg");
           JLabel labelImagem = new JLabel(imagem);
           painelCentro.add(labelImagem);
           
@@ -88,6 +102,18 @@ public class Tela {
           inventario = new JTextArea("Inventário: \n\n - Mapa\n - Lupa\n - Carteira\n - Distintivo\n - Câmera\n");
           inventario.setEditable(false);
           painelDireita.add(inventario);
+
+          /*
+          * Este trecho de código configura o painelDireita.
+          * 
+          * painelDireita é um componente de contêiner JPanel que 
+          * está sendo configurado com um tamanho preferencial de 300x150 pixels, 
+          * um layout BoxLayout (caixa) com orientação PAGE_AXIS (vertical), e uma
+          * borda vazia com margens de 10 pixels em todos os lados.
+          */
+          painelDireita.setPreferredSize(new Dimension(300, 150));
+          painelDireita.setLayout(new BoxLayout(painelDireita, BoxLayout.PAGE_AXIS));
+          painelDireita.setBorder(borderLateral);
 
           /*
            * Embaixo, fica uma area de texto com scrollbar mostrando os textos que o jogo retorna ao jogador. Tambem fica um campo de texto para que o jogador digite os comandos
@@ -108,6 +134,13 @@ public class Tela {
           painelInferior.add(scroll);
           painelInferior.add(interacao);
 
+          /*
+          * Adiciona os painéis à janela usando BorderLayout:
+          * - painelEsquerda à posição WEST (esquerda).
+          * - painelCentro à posição CENTER (centro).
+          * - painelDireita à posição EAST (direita).
+          * - painelInferior à posição SOUTH (inferior).
+          */
           janela.add(painelEsquerda, BorderLayout.WEST);
           janela.add(painelCentro, BorderLayout.CENTER);
           janela.add(painelDireita, BorderLayout.EAST);
