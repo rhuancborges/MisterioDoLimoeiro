@@ -270,7 +270,8 @@ public class Jogo {
         if (comando.temSegundaPalavra()) {
              tela.adicionarNaTela("Sair o que?");
             return false;
-        } else
+        } else {
             return true; // sinaliza que quer sair
+        }
     }
 }
