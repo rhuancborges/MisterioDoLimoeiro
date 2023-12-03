@@ -24,8 +24,8 @@ public class LogDeComandos {
      * Metódo que registra um comando no arquivo de texto. O comando é adicionado
      * como uma nova linha no arquivo.
      * 
-     * @param comando o comando a ser registrado no arquivo.
-     * @throws IOException se ocorrer uma falha ao salvar no arquivo.
+     * @param comando O comando a ser registrado no arquivo.
+     * @throws IOException Se ocorrer uma falha ao salvar no arquivo.
      */
     public void registrarComando(String comando) {
         try {
