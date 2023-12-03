@@ -1,24 +1,24 @@
 import java.util.Scanner;
 
 /**
- * Esta classe eh parte da aplicacao "World of Zuul".
- * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
+ * Analisador - responsável por interpretar os comandos fornecidos pelo usuário
+ * no contexto do jogo "Mistério do Limoeiro".
  * 
- * Esse analisador le a entrada do usuario e tenta interpreta-la como um
- * comando "Adventure". Cada vez que eh chamado ele le uma linha do terminal
+ * Este analisador lê a entrada do usuário e tenta interpretá-la como um
+ * comando de aventura. Cada vez que é chamado, ele lê uma linha do terminal
  * e tenta interpretar a linha como um comando de duas palavras. Ele retorna
  * o comando como um objeto da classe Comando.
  *
- * O analisador tem um conjunto de palavras de comando conhecidas. Ele compara
- * a entrada do usuario com os comandos conhecidos, e se a entrada nao eh um
- * dos comandos conhecidos, ele retorna um objeto comando que eh marcado como
+ * O analisador possui um conjunto de palavras de comando conhecidas. Ele compara
+ * a entrada do usuário com os comandos conhecidos, e se a entrada não é um
+ * dos comandos conhecidos, ele retorna um objeto comando marcado como
  * um comando desconhecido.
  * 
- * @author Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
- * @version 2011.07.31 (2016.02.01)
+ * @author José Airton Rios, Lara Ramos Linhares
+ * @version 1.0
  */
 public class Analisador {
-    private PalavrasComando palavrasDeComando; // guarda todas as palavras de comando validas
+    private PalavrasComando palavrasDeComando; 
 
     /**
      * Cria um analisador para ler do terminal.
@@ -28,26 +28,26 @@ public class Analisador {
     }
 
     /**
-     * @return O proximo comando do usuario
+     * Lê a linha fornecida e retorna o próximo comando do usuário.
+     * 
+     * @param linha A linha de entrada fornecida pelo usuário.
+     * @return O próximo comando do usuário.
      */
     public Comando pegarComando(String linha) {
         String palavra1 = null;
         String palavra2 = null;
 
-
         Scanner tokenizer = new Scanner(linha);
         if (tokenizer.hasNext()) {
-            palavra1 = tokenizer.next(); // pega a primeira palavra
+            palavra1 = tokenizer.next(); 
             if (tokenizer.hasNext()) {
-                palavra2 = tokenizer.next(); // pega a segunda palavra
+                palavra2 = tokenizer.next(); 
                 if (palavra2.equals("com")) {
                     palavra2 = tokenizer.next();
                 }
             }
         }
 
-        // Agora verifica se esta palavra eh conhecida. Se for, cria um comando
-        // com ela. Se nao, cria um comando "null" (para comando desconhecido)
         if (palavrasDeComando.ehComando(palavra1)) {
             return new Comando(palavra1, palavra2);
         } else {
@@ -55,11 +55,22 @@ public class Analisador {
         }
     }
 
+    /**
+     * Retorna uma representação em string dos comandos disponíveis no jogo.
+     * 
+     * @return Os comandos disponíveis no jogo.
+     */
     public String mostrarComandos() {
         return palavrasDeComando.getComandos();
     }
 
+    /**
+     * Define um novo comando para ser reconhecido pelo analisador.
+     * 
+     * @param comando O novo comando a ser adicionado.
+     */
     public void definirComando(String comando) {
         palavrasDeComando.setComando(comando);
     }
 }
+
