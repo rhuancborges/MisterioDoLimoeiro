@@ -100,7 +100,7 @@ public class Tela {
           JScrollBar barra = new JScrollBar(JScrollBar.VERTICAL);
           scroll.setVerticalScrollBar(barra);
           jogo.setEditable(false);
-          jogo.setPreferredSize(new Dimension(1280, 170));
+          scroll.setPreferredSize(new Dimension(1280, 170));
           JPanel interacao = new JPanel();
           interacao.setLayout(new BoxLayout(interacao, BoxLayout.X_AXIS));
           comandos = new JTextField();
@@ -134,6 +134,6 @@ public class Tela {
        * Metodo para adicionar uma string na area de texto que mostra as evidencias
        */
      public void adicionarEvidencia(String s){
-          jogo.append(s + "\n");
+          listaItens.append(s + "\n");
      }
 }

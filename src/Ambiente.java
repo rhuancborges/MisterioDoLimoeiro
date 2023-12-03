@@ -92,7 +92,7 @@ public class Ambiente {
      */
 
     public String getLongaDescricao() {
-        String retornoDescricao = "Você está " + descricao + ".\n" + getStringSaida() + "\n";
+        String retornoDescricao = descricao + ".\n" + getStringSaida() + "\n";
         if (npc != null) {
             retornoDescricao += "Você também vê " + npc.getNome() + " e observa " + npc.getNome()
                     + npc.getDescricao() + ".\n";

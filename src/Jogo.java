@@ -51,14 +51,16 @@ public class Jogo {
         Ambiente delegacia, praca, casaDaMonica, casaDaMagali, casaDoCebola, escola, cinema,
                 padaria, bosque, galpao, lago, pastelariaJuca;
 
-        Evidencia veneno, bolsa, macarico, faca, pingente, balde, sansao;
+        Evidencia veneno, bolsa, macarico, faca, pingente, balde, sansao, arma, plano;
         veneno = new Evidencia("veneno", "Um veneno para ratos");
-        bolsa = new Evidencia("bolsa", "A bolsa da Carminha FruFru");
+        bolsa = new Evidencia("bolsa", "A bolsa da Carminha FruFru aberta e vazia com a abertura levemente queimada");
         macarico = new Evidencia("macarico", "Um maçarico comum");
         faca = new Evidencia("faca", "Uma faca de cozinha coberta de sangue");
         pingente = new Evidencia("pingente", "Um pingente de ouro com as iniciais 'CF'");
         balde = new Evidencia("balde", "Um balde com água");
-        sansao = new Evidencia("sansao", "Um Sansão de pelúcia, porém coberto de sangue");
+        sansao = new Evidencia("sansao", "Um Sansão de pelúcia, porém coberto de sangue e com um corte profundo na barriga");
+        arma = new Evidencia("arma da amnésia", "uma arma tecnológica capaz de apagar a memória de alguém");
+        plano = new Evidencia("plano do cebolinha", "um plano elaborado por Cebolinha num papel levemente queimado");
 
         this.assassino = "Magali"; // define o assassino
 
@@ -68,10 +70,10 @@ public class Jogo {
 
         delegacia = new Ambiente("Delegacia", "Você está na delegacia", null, "Jeremias",
                 "Alto, magro, cabelo preto, olhos castanhos, usa óculos",
-                "Olá, sou o Jeremias, o delegado da cidade. Estou investigando o desaparecimento do Cebola e por isso chamamos você, para que nos ajude com a busca.",
-                "Obrigado por me ajudar a encontrar o Cebola. Você é um ótimo detetive!", null, false);
+                "Olá, sou o Jeremias, o delegado da cidade. Estou investigando a morte da Carminha FruFru e por isso chamamos você, para que nos ajude com a busca.",
+                "", null, false);
 
-        praca = new Ambiente("Praca", "Você está na praça central", null, "Denise", " a Denise",
+        praca = new Ambiente("Praca", "Você está na praça central", plano, "Denise", " a Denise",
                 "Obrigada por vir, detetive! Achei o corpo da minha amiga no lago e fiquei desesperadíssima",
                 "Isso me lembrou da última vez que vi a Carminha! Beijando um garoto na padaria", faca, false);
 
@@ -81,7 +83,7 @@ public class Jogo {
 
         casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica", " a Mônica",
                 "AAAAAA, o Sansão não está aqui! Eu pego aquele peste do Cebolinha!",
-                "Sim, eu a usei! Mas eu precisei usá-la", sansao, false);
+                "Sim, eu a usei! Mas eu precisei usá-la por motivo de força maior", arma, false);
 
         casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", veneno, "Cascão", " o Cascão",
                 "O Cebolinha desapareceu, estou preocupado! Claro que me preocupo com a morte da Carminha, mas é diferente",
@@ -95,17 +97,17 @@ public class Jogo {
 
         cinema = new Ambiente("Cinema", "Você está no cinema", pingente, "Franjinha", " o franjinha",
                 "Eu não sei de nada! Não saí do meu laboratório em nenhum momento",
-                "A Arma... A arma que fiz está aí", sansao, false);
+                "A Arma... A arma que fiz estava dentro do Sansão", sansao, false);
 
         padaria = new Ambiente("Padaria", "Você está na padaria", faca, "Quinzinho", " o quinzinho",
                 "Desculpa a demora em atendê-lo! Estava enfaixando meu machucado",
-                "Estou chocado! Não posso acreditar que ela chegou a esse ponto!", bolsa, false);
+                "Estou chocado! Não posso acreditar que ela chegou a esse ponto!", plano, false);
 
         bosque = new Ambiente("Bosque", "Você está no bosque", sansao, null, null, null, null, null, false);
 
         galpao = new Ambiente("Galpao", "Você está no galpão", balde, null, null, null, null, null, false);
 
-        lago = new Ambiente("Lago", "Você está em frente ao lago", null, null, null, null, null, null, false);
+        lago = new Ambiente("Lago", "Você está em frente ao lago", arma, null, null, null, null, null, false);
 
         pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", macarico, "Juca",
                 "o Juca",
