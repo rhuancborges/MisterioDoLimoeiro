@@ -1,7 +1,7 @@
 /**
 *  Essa eh a classe de interface gráfica da aplicação "Misterio do Limoeiro"
 * 
-* @author  Rhuan
+* @author  João Pedro Nogueira Lucas, Rhuan Campideli Borges.
 * @version 1.0
 */
 
@@ -25,44 +25,48 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Tela 
-{
-   private Analisador analisador;
-   private String textoAtual;
-   private Ambiente ambienteAtual;
-   private JFrame janela;
-   private JTextArea listaItens;
-   private JTextArea inventario;
-   private JTextArea jogo;
-   private JTextArea localAtual;
-   private JTextField comandos;
-   private JButton enviar;
-   private boolean flagRetorno;
-       
-   /**
-    * Cria o jogo e incializa seu mapa interno.
-    */
-   public Tela() 
-   {
-        janela = new JFrame();
-        montarJanela();
-        flagRetorno = false;
-       
-   }
+public class Tela {
+     private Analisador analisador;
+     private String textoAtual;
+     private Ambiente ambienteAtual;
+     private JFrame janela;
+     private JTextArea listaItens;
+     private JTextArea inventario;
+     private JTextArea jogo;
+     private JTextArea localAtual;
+     private JTextField comandos;
+     private JButton enviar;
+     private boolean flagRetorno;
+     private LogDeComandos logDeComandos;
 
-   public void exibir(Jogo jogo){
-        janela.setVisible(true); 
-        comandos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(comandos.getText());
-                jogo.receberComando(comandos.getText());
-                comandos.setText("");
-            }
-        });
-   }
+     /**
+      * Cria o jogo e incializa seu mapa interno.
+      */
+     public Tela() {
+          janela = new JFrame();
+          montarJanela();
+          flagRetorno = false;
+          logDeComandos = new LogDeComandos();
+     }
 
+<<<<<<< Updated upstream
      public void montarJanela(){
+=======
+     public void exibir(Jogo jogo) {
+          janela.setVisible(true);
+          comandos.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                    String comandoDigitado = comandos.getText();
+                    jogo.receberComando(comandoDigitado);
+                    logDeComandos.registrarComando(comandoDigitado);
+                    comandos.setText("");
+               }
+          });
+     }
+
+     public void montarJanela() {
+>>>>>>> Stashed changes
           janela.setSize(1280, 720);
           janela.setLayout(new BorderLayout());
 
@@ -71,6 +75,7 @@ public class Tela
           localAtual = new JTextArea();
           localAtual.setEditable(false);
           painelSuperior.add(localAtual);
+<<<<<<< Updated upstream
        
           JPanel painelEsquerda = new JPanel();
           painelEsquerda.setLayout(new FlowLayout());
@@ -118,8 +123,52 @@ public class Tela
    public void fecharJanela(){
         janela.setVisible(false);
    }
+=======
 
-   public void adicionarNaTela(String s){
-        jogo.append(s + "\n");
-   }
+          JPanel painelEsquerda = new JPanel();
+          painelEsquerda.setLayout(new FlowLayout());
+          listaItens = new JTextArea("Lista de evidências: \n\n");
+          listaItens.setEditable(false);
+          painelEsquerda.add(listaItens);
+
+          JPanel painelCentro = new JPanel();
+          painelCentro.setLayout(new FlowLayout());
+          ImageIcon imagem = new ImageIcon("./mapa.jpg");
+          JLabel labelImagem = new JLabel(imagem);
+          painelCentro.add(labelImagem);
+
+          JPanel painelDireita = new JPanel();
+          painelDireita.setLayout(new FlowLayout());
+          inventario = new JTextArea("Inventário: \n\n - Mapa\n - Lupa\n - Carteira\n - Distintivo\n - Câmera\n");
+          inventario.setEditable(false);
+          painelDireita.add(inventario);
+
+          JPanel painelInferior = new JPanel();
+          painelInferior.setLayout(new BoxLayout(painelInferior, BoxLayout.Y_AXIS));
+          jogo = new JTextArea();
+          JPanel interacao = new JPanel();
+          interacao.setLayout(new BoxLayout(interacao, BoxLayout.X_AXIS));
+          comandos = new JTextField();
+          enviar = new JButton("Executar Comando");
+          interacao.add(comandos);
+          interacao.add(enviar);
+>>>>>>> Stashed changes
+
+          painelInferior.add(jogo);
+          painelInferior.add(interacao);
+
+          janela.add(painelSuperior, BorderLayout.NORTH);
+          janela.add(painelEsquerda, BorderLayout.WEST);
+          janela.add(painelCentro, BorderLayout.CENTER);
+          janela.add(painelDireita, BorderLayout.EAST);
+          janela.add(painelInferior, BorderLayout.SOUTH);
+     }
+
+     public void fecharJanela() {
+          janela.setVisible(false);
+     }
+
+     public void adicionarNaTela(String s) {
+          jogo.append(s + "\n");
+     }
 }
