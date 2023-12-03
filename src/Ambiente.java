@@ -51,7 +51,7 @@ public class Ambiente {
             this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal, evidenciaQueAfeta,
                     assassino);
         }
-        this.item = item; // IMPLEMENTARR!!!!!!!!
+        this.item = item;
     }
 
     /**

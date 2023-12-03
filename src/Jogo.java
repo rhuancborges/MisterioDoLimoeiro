@@ -1,8 +1,42 @@
-import itens.Consumivel;
-import itens.Evidencia;
-import itens.Ferramenta;
-import itens.Inventario;
-import itens.Item;
+
+/**
+ *  Essa eh a classe principal da aplicação "Misterio do Limoeiro"
+ *  "Misterio do Limoeiro" eh um jogo de investigacao baseado em texto.
+ *  Usuarios podem caminhar entre cenarios, capturar itens e conversar com personagens. 
+ *  A ideia eh o jogador descobrir quem eh o assassino da historia, deduzindo pistas ao longo
+ * dos cenarios e delatar ao delegado.
+ *  Se o delegado receber o nome correto do assassino, o jogador ganha o jogo. Caso receba outro
+ * nome, o jogo termina e o jogador perde, pois o assassino fugiu.
+ * 
+ *  Para jogar esse jogo, crie uma instancia dessa classe e chame o metodo
+ *  "jogar". 
+ * 
+ *  Essa classe principal cria e inicializa todas as outras: ela cria os
+ *  ambientes, cria o analisador e comeca o jogo. Ela avalia,
+ *  executa os comandos que o analisador retorna e tambem funciona como interface grafica
+ * 
+ * @author  Rhuan, Lara
+ * @version 1.1
+ */
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.TextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import itens.*;
 
 public class Jogo {
     private Analisador analisador;
