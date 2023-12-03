@@ -58,16 +58,10 @@ public class PalavrasComando {
         return false;
     }
 
-<<<<<<< HEAD
     public String getComandos() {
         String retorna = "";
-        for (String comando : comandosValidos) {
-            retorna += comando + "\n";
-=======
-    public void getComandos() {
         for (Map.Entry<String, String> comando : comandosValidos.entrySet()) {
-            System.out.println(comando.getKey() + " - " + comando.getValue() + "\n");
->>>>>>> 671c63605e9b82fb8df79f1e911d736b382c615b
+            retorna += comando.getKey() + " - " + comando.getValue() + "\n";
         }
         return retorna;
     }

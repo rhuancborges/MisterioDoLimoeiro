@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.TextArea;
@@ -93,17 +94,18 @@ public class Tela {
            * Embaixo, fica uma area de texto com scrollbar mostrando os textos que o jogo retorna ao jogador. Tambem fica um campo de texto para que o jogador digite os comandos
            */
           JPanel painelInferior = new JPanel();
-          painelInferior.setSize(1280, 100);;
           painelInferior.setLayout(new BoxLayout(painelInferior, BoxLayout.Y_AXIS)); 
           jogo = new JTextArea();
           JScrollPane scroll = new JScrollPane(jogo);
           JScrollBar barra = new JScrollBar(JScrollBar.VERTICAL);
           scroll.setVerticalScrollBar(barra);
           jogo.setEditable(false);
+          jogo.setPreferredSize(new Dimension(1280, 170));
           JPanel interacao = new JPanel();
           interacao.setLayout(new BoxLayout(interacao, BoxLayout.X_AXIS));
           comandos = new JTextField();
           interacao.add(comandos);
+          interacao.setPreferredSize(new Dimension(1280, 30));
 
           painelInferior.add(scroll);
           painelInferior.add(interacao);
@@ -127,4 +129,11 @@ public class Tela {
      public void adicionarNaTela(String s){
           jogo.append(s + "\n");
      }
+
+     /*
+       * Metodo para adicionar uma string na area de texto que mostra as evidencias
+       */
+     public void adicionarEvidencia(String s){
+          jogo.append(s + "\n");
      }
+}

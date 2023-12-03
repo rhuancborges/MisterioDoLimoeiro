@@ -13,30 +13,15 @@
  * 
  *  Essa classe principal cria e inicializa todas as outras: ela cria os
  *  ambientes, cria o analisador e comeca o jogo. Ela avalia,
- *  executa os comandos que o analisador retorna e tambem funciona como interface grafica
+ *  executa os comandos que o analisador retorna e tambem recebe comandos da interface grafica
  * 
- * @author  Rhuan, Lara
- * @version 1.1
+ * @author  Rhuan, Lara, José Airton
+ * @version 2.0
  */
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.TextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import itens.*;
+
 
 public class Jogo {
     private Analisador analisador;
@@ -294,7 +279,7 @@ public class Jogo {
         if (inventario.contemItem("mapa")) {
             tela.adicionarNaTela(ambienteAtual.getLongaDescricao());
         } else {
-            System.out.println(ambienteAtual.getPequenaDescricao());
+            tela.adicionarNaTela(ambienteAtual.getPequenaDescricao());
         }
     }
 
@@ -335,7 +320,7 @@ public class Jogo {
      */
 
     private void checarInventario() {
-        System.out.println(inventario.getItens());
+        tela.adicionarNaTela(inventario.getItens());
     }
 
     /**
@@ -346,10 +331,11 @@ public class Jogo {
         Item item = ambienteAtual.removerItem();
         if (item != null) {
             inventario.adicionarItem(item);
-            System.out.println("Você pegou o item: " + item.getNome());
+            tela.adicionarNaTela("Você pegou o item: " + item.getNome());
+            tela.adicionarEvidencia(item.getNome());
             analisador.excluirComando("pegar");
         } else {
-            System.out.println("Não há nada aqui!");
+            tela.adicionarNaTela("Não há nada aqui!");
         }
     }
 
@@ -363,7 +349,7 @@ public class Jogo {
         if (ambienteAtual.getNome().equals("Delegacia")) {
 
             if (!comando.temSegundaPalavra()) {
-                System.out.println("Acusar quem?");
+                tela.adicionarNaTela("Acusar quem?");
                 return false;
             }
 
@@ -382,7 +368,7 @@ public class Jogo {
             return true;
 
         } else {
-            System.out.println("Você não pode acusar ninguém aqui! Vá para a delegacia!");
+            tela.adicionarNaTela("Você não pode acusar ninguém aqui! Vá para a delegacia!");
             return false;
         }
     }

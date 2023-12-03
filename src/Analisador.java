@@ -57,11 +57,6 @@ public class Analisador {
     public String mostrarComandos() {
         return palavrasDeComando.getComandos();
     }
-<<<<<<< HEAD
-    
-    public void definirComando(String comando) {
-        palavrasDeComando.setComando(comando);
-=======
 
     public void definirComando(String comando, String descricao) {
         palavrasDeComando.setComando(comando, descricao);
@@ -69,6 +64,5 @@ public class Analisador {
 
     public void excluirComando(String comando) {
         palavrasDeComando.deletarComando(comando);
->>>>>>> 671c63605e9b82fb8df79f1e911d736b382c615b
     }
 }
