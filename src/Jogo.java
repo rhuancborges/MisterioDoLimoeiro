@@ -1,5 +1,25 @@
+/**
+ * Classe Jogo - representa a lógica do jogo "Mistério do Limoeiro".
+ * 
+ * O jogo é uma aventura interativa baseada em texto. O jogador pode
+ * movimentar-se entre diferentes ambientes, observar detalhes, conversar
+ * com personagens e realizar ações específicas para avançar na história.
+ * 
+ * O jogo utiliza a classe Analisador para interpretar os comandos do
+ * jogador, a classe Ambiente para representar os diferentes locais do jogo,
+ * a classe Inventario para gerenciar os itens do protagonista e a classe
+ * Tela para exibir a interface gráfica.
+ * 
+ * @author José Airton Rios, Lara Ramos Linhares, Rhuan Campideli Borges
+ * @version 1.0
+ */
+
 import itens.Inventario;
 import itens.Item;
+
+/**
+ * Cria um novo jogo. Inicializa o analisador, inventário, ambientes e a tela.
+ */
 
 public class Jogo {
     private Analisador analisador;
@@ -16,6 +36,9 @@ public class Jogo {
         tela = new Tela();
     }
 
+    /**
+     * Cria os ambientes e os interliga.
+     */
     private void criarAmbientes() {
         Ambiente delegacia, praca, casaDaMonica, casaDaMagali, casaDoCebola, escola, cinema,
                 padaria, bosque, galpao, lago, pastelariaJuca;
@@ -24,8 +47,6 @@ public class Jogo {
         faca = new Item("faca", "Uma faca de cozinha cheia de sangue");
         corda = new Item("corda", "Uma corda de escalada");
         caderno = new Item("caderno", "Um caderno com anotações");
-
-        // cria os ambientes
 
         // COMPLETAR COM ITENS
 
@@ -118,6 +139,11 @@ public class Jogo {
         tela.exibir(this);  
     }
 
+    /**
+     * Recebe um comando da interface gráfica e o processa.
+     * 
+     * @param c Comando recebido da interface gráfica.
+     */
     public void receberComando(String c){
         Comando comando = analisador.pegarComando(c);
         if(processarComando(comando)){
