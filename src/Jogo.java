@@ -1,3 +1,6 @@
+import itens.Consumivel;
+import itens.Evidencia;
+import itens.Ferramenta;
 import itens.Inventario;
 import itens.Item;
 
@@ -5,6 +8,7 @@ public class Jogo {
     private Analisador analisador;
     private Ambiente ambienteAtual;
     private Inventario inventario;
+    private String assassino;
     private Tela tela;
 
     public Jogo() {
@@ -16,14 +20,28 @@ public class Jogo {
         tela = new Tela();
     }
 
+    /*
+     * Cria todos os ambientes e liga as saidas deles.
+     * Cada ambiente tem até 6 saídas, uma para cada direção cardeal e uma para cima
+     * e uma para baixo.
+     * Cada ambiente tem um item, que é uma evidência.
+     * Cada ambiente tem um personagem, que é um suspeito.
+     */
+
     private void criarAmbientes() {
         Ambiente delegacia, praca, casaDaMonica, casaDaMagali, casaDoCebola, escola, cinema,
                 padaria, bosque, galpao, lago, pastelariaJuca;
 
-        Item faca, corda, caderno;
-        faca = new Item("faca", "Uma faca de cozinha cheia de sangue");
-        corda = new Item("corda", "Uma corda de escalada");
-        caderno = new Item("caderno", "Um caderno com anotações");
+        Evidencia veneno, bolsa, macarico, faca, pingente, balde, sansao;
+        veneno = new Evidencia("veneno", "Um veneno para ratos");
+        bolsa = new Evidencia("bolsa", "A bolsa da Carminha FruFru");
+        macarico = new Evidencia("macarico", "Um maçarico comum");
+        faca = new Evidencia("faca", "Uma faca de cozinha coberta de sangue");
+        pingente = new Evidencia("pingente", "Um pingente de ouro com as iniciais 'CF'");
+        balde = new Evidencia("balde", "Um balde com água");
+        sansao = new Evidencia("sansao", "Um Sansão de pelúcia, porém coberto de sangue");
+
+        this.assassino = "Magali"; // define o assassino
 
         // cria os ambientes
 
@@ -32,28 +50,48 @@ public class Jogo {
         delegacia = new Ambiente("Delegacia", "Você está na delegacia", null, "Jeremias",
                 "Alto, magro, cabelo preto, olhos castanhos, usa óculos",
                 "Olá, sou o Jeremias, o delegado da cidade. Estou investigando o desaparecimento do Cebola e por isso chamamos você, para que nos ajude com a busca.",
-                "Obrigado por me ajudar a encontrar o Cebola. Você é um ótimo detetive!");
-        praca = new Ambiente("Praca", "Você está na praça central", null, "Denise", "a Denise", "Olá, sou a Denise",
-                "Tchau");
-        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", null, "Magali", "a Magali",
-                "Olá, sou a Magali", "Tchau");
-        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica", "a Mônica",
-                "Olá, sou a Mônica", "Tchau");
-        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", corda, "Cascão", "o Cascão",
-                "Olá, sou o Cascão", "Tchau");
-        escola = new Ambiente("Escola", "Você está na escola", null, "Marina", "a Marina", "Olá, sou a Marina",
-                "Tchau");
-        cinema = new Ambiente("Cinema", "Você está no cinema", null, "Franjinha", "o franjinha",
-                "Olá, sou o Franjinha",
-                "Tchau");
-        padaria = new Ambiente("Padaria", "Você está na padaria", null, "Quinzinho", "o quinzinho",
-                "Olá, sou o Quinzinho", "Tchau");
-        bosque = new Ambiente("Bosque", "Você está no bosque", faca, null, null, null, null);
-        galpao = new Ambiente("Galpao", "Você está no galpão", null, null, null, null, null);
-        lago = new Ambiente("Lago", "Você está em frente ao lago", null, null, null, null, null);
-        pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", null, "Juca",
+                "Obrigado por me ajudar a encontrar o Cebola. Você é um ótimo detetive!", null, false);
+
+        praca = new Ambiente("Praca", "Você está na praça central", null, "Denise", " a Denise",
+                "Obrigada por vir, detetive! Achei o corpo da minha amiga no lago e fiquei desesperadíssima",
+                "Isso me lembrou da última vez que vi a Carminha! Beijando um garoto na padaria", faca, false);
+
+        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", null, "Magali", " a Magali",
+                "Oi, detetive, não repara nesse tanto de melancia que comi. Estou mal pela morte da minha amiga!",
+                "Onde achou isso? Acho que temos que respeitar a privacidade dela!", bolsa, true);
+
+        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica", " a Mônica",
+                "AAAAAA, o Sansão não está aqui! Eu pego aquele peste do Cebolinha!",
+                "Sim, eu a usei! Mas eu precisei usá-la", sansao, false);
+
+        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", veneno, "Cascão", " o Cascão",
+                "O Cebolinha desapareceu, estou preocupado! Claro que me preocupo com a morte da Carminha, mas é diferente",
+                "Tá bom, eu falo a verdade! Antes da notícia da morte da Carminha, o Cebolinha estava aflito, me entregou o sansão e fugiu para a fazenda do Chico Bento",
+                balde, false);
+
+        escola = new Ambiente("Escola", "Você está na escola", bolsa, "Marina", " a Marina",
+                "Quem faria uma coisa dessas? Realmente é um crime terrível",
+                "Eu me lembro de tudo! A Mônica sabe quem é o assassino e apagou a minha memória quando eu e o Franjinha quisemos denunciar",
+                pingente, false);
+
+        cinema = new Ambiente("Cinema", "Você está no cinema", pingente, "Franjinha", " o franjinha",
+                "Eu não sei de nada! Não saí do meu laboratório em nenhum momento",
+                "A Arma... A arma que fiz está aí", sansao, false);
+
+        padaria = new Ambiente("Padaria", "Você está na padaria", faca, "Quinzinho", " o quinzinho",
+                "Desculpa a demora em atendê-lo! Estava enfaixando meu machucado",
+                "Estou chocado! Não posso acreditar que ela chegou a esse ponto!", bolsa, false);
+
+        bosque = new Ambiente("Bosque", "Você está no bosque", sansao, null, null, null, null, null, false);
+
+        galpao = new Ambiente("Galpao", "Você está no galpão", balde, null, null, null, null, null, false);
+
+        lago = new Ambiente("Lago", "Você está em frente ao lago", null, null, null, null, null, null, false);
+
+        pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", macarico, "Juca",
                 "o Juca",
-                "Olá, sou o Juca", "Tchau");
+                "Eu tenho que conversar mesmo? Não estou me sentindo muito confortável",
+                "Ai meu Pai! A culpa foi toda minha!! Como fui capaz de deixar isso acontecer?", veneno, false);
 
         // ARRUMAR SAÍDAS
         // inicializa as saidas dos ambientes
@@ -79,14 +117,15 @@ public class Jogo {
      */
 
     private void gerarComandos() { // ADICIONAR DESCRIÇÃO DOS COMANDOS
-        analisador.definirComando("ajuda");
-        analisador.definirComando("ir");
-        analisador.definirComando("observar");
-        analisador.definirComando("conversar");
-        analisador.definirComando("procurar");
-        analisador.definirComando("inventario");
-        // analisador.definirComando("pegar");
-        analisador.definirComando("sair");
+        analisador.definirComando("ajuda", "Mostra os comandos disponíveis");
+        analisador.definirComando("ir", "Vai para um ambiente, digite 'ir' e a direção");
+        analisador.definirComando("observar", "Observa o ambiente atual e dá as informações sobre ele");
+        analisador.definirComando("conversar", "Conversa com o personagem do ambiente atual");
+        analisador.definirComando("procurar", "Procura com a lupa o ambiente atual");
+        analisador.definirComando("inventario", "Checa o seu inventário");
+        analisador.definirComando("acusar",
+                "Acusa quem é o assassino(escreva acusar nomeDoSuspeito), se for o correto, você vence o jogo");
+        analisador.definirComando("sair", "Sai do jogo");
     }
 
     /*
@@ -94,17 +133,15 @@ public class Jogo {
      */
 
     private void gerarInventarioInicial() { // COLOCAR TODAS AQUI COMO FERRAMENTAS
-        Item lupa, mapa, carteira, distintivo, camera;
-        lupa = new Item("lupa", "Uma lupa de detetive");
-        mapa = new Item("mapa", "Um mapa da cidade");
-        carteira = new Item("carteira", "A carteira do detetive");
-        distintivo = new Item("distintivo", "O distintivo do detetive");
-        camera = new Item("camera", "A camera do detetive");
+        Item lupa, mapa, carteira, distintivo;
+        lupa = new Ferramenta("lupa", "Uma lupa de detetive");
+        mapa = new Ferramenta("mapa", "Um mapa da cidade");
+        carteira = new Consumivel("carteira", "A carteira do detetive", 2);
+        distintivo = new Ferramenta("distintivo", "O distintivo do detetive");
         inventario.adicionarItem(lupa);
         inventario.adicionarItem(mapa);
         inventario.adicionarItem(carteira);
         inventario.adicionarItem(distintivo);
-        inventario.adicionarItem(camera);
     }
 
     /*
@@ -147,7 +184,7 @@ public class Jogo {
         boolean querSair = false;
 
         if (comando.ehDesconhecido()) {
-            tela.adicionarNaTela("Comando desconhecido...01 Por favor insira um comando válido!");
+            tela.adicionarNaTela("Comando inválido! Digite 'ajuda' para ver os comandos disponíveis.");
             return false;
         }
 
@@ -164,13 +201,11 @@ public class Jogo {
             procurarComLupa();
         else if (palavraDeComando.equals("inventario"))
             checarInventario();
-        /*
-         * else if (palavraDeComando.equals("olhar com a lupa"))
-         * olharComALupa();
-         * else if (palavraDeComando.equals("pegar"))
-         * pegarItem();
-         */
-        else if (palavraDeComando.equals("sair"))
+        else if (palavraDeComando.equals("pegar"))
+            pegarItem();
+        else if (palavraDeComando.equals("acusar")) {
+            querSair = acusarPersonagem(comando);
+        } else if (palavraDeComando.equals("sair"))
             querSair = sair(comando);
         else
             tela.adicionarNaTela("Comando desconhecido... Por favor insira um comando válido!");
@@ -202,6 +237,8 @@ public class Jogo {
             return;
         }
 
+        analisador.excluirComando("pegar"); // Reseta o pegar dos ambientes
+
         String direcao = comando.getSegundaPalavra();
 
         // Tenta sair do ambiente atual.
@@ -220,7 +257,11 @@ public class Jogo {
      */
 
     private void observar() {
-        tela.adicionarNaTela(ambienteAtual.getLongaDescricao());
+        if (inventario.contemItem("mapa")) {
+            tela.adicionarNaTela(ambienteAtual.getLongaDescricao());
+        } else {
+            System.out.println(ambienteAtual.getPequenaDescricao());
+        }
     }
 
     /**
@@ -230,7 +271,8 @@ public class Jogo {
     private void conversarComPersonagem() {
         // Adicionar a lógica do item - Se um dado item estiver no inventário, o
         // personagem tem uma fala diferente
-        tela.adicionarNaTela(ambienteAtual.getFalaInicialPersonagem());
+        ambienteAtual.afetaFalaPersonagem(inventario.getEvidencias());
+        tela.adicionarNaTela(ambienteAtual.getFalaPersonagem());
     }
 
     /**
@@ -244,6 +286,8 @@ public class Jogo {
 
             if (item != null) {
                 tela.adicionarNaTela(item.getDescricao());
+                analisador.definirComando("pegar",
+                        "Pega um item do ambiente atual, só funciona quando há itens no local");
             } else {
                  tela.adicionarNaTela("Não há nada aqui!");
             }
@@ -257,7 +301,56 @@ public class Jogo {
      */
 
     private void checarInventario() {
-        tela.adicionarNaTela(inventario.getItens());
+        System.out.println(inventario.getItens());
+    }
+
+    /**
+     * Pega um item do ambiente atual.
+     */
+
+    private void pegarItem() {
+        Item item = ambienteAtual.removerItem();
+        if (item != null) {
+            inventario.adicionarItem(item);
+            System.out.println("Você pegou o item: " + item.getNome());
+            analisador.excluirComando("pegar");
+        } else {
+            System.out.println("Não há nada aqui!");
+        }
+    }
+
+    /**
+     * Acusa o personagem de ser o assassino.
+     * 
+     * @param comando Comando com a palavra acusar e o nome do personagem.
+     */
+
+    private boolean acusarPersonagem(Comando comando) {
+        if (ambienteAtual.getNome().equals("Delegacia")) {
+
+            if (!comando.temSegundaPalavra()) {
+                System.out.println("Acusar quem?");
+                return false;
+            }
+
+            String personagem = comando.getSegundaPalavra();
+            if (personagem.equals(assassino)) {
+                System.out.println("Parabéns, você acertou! Você venceu o jogo!");
+                System.out.println("Obrigado por jogar.");
+                System.out.println(
+                        "Desenvolvido por: João Pedro Nogueira, José Airton Rios, Lara Linhares e Rhuan Campideli");
+            } else {
+                System.out.println("Você errou! O assassino era " + assassino);
+                System.out.println("Obrigado por jogar.");
+                System.out.println(
+                        "Desenvolvido por: João Pedro Nogueira, José Airton Rios, Lara Linhares e Rhuan Campideli");
+            }
+            return true;
+
+        } else {
+            System.out.println("Você não pode acusar ninguém aqui! Vá para a delegacia!");
+            return false;
+        }
     }
 
     /**

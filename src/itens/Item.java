@@ -1,6 +1,6 @@
 package itens;
 
-public class Item {
+public abstract class Item {
     private String nome;
     private String descricao;
 

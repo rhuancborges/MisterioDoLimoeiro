@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Esta classe eh parte da aplicacao "World of Zuul".
@@ -13,22 +14,31 @@ import java.util.ArrayList;
 
 public class PalavrasComando {
     // um vetor constante que guarda todas as palavras de comandos validas
-    private static ArrayList<String> comandosValidos;
+    private static HashMap<String, String> comandosValidos;
 
     /**
      * Construtor - inicializa as palavras de comando.
      */
     public PalavrasComando() {
-        comandosValidos = new ArrayList<String>();
+        comandosValidos = new HashMap<String, String>();
     }
 
     /**
-     * Insere os comandos validos no ArrayList.
+     * Insere os comandos validos na lista de comandos.
      * 
      * @param comando Novo comando a ser inserido no arraylist.
      */
-    public void setComando(String comando) {
-        comandosValidos.add(comando);
+    public void setComando(String comando, String descricao) {
+        comandosValidos.put(comando, descricao);
+    }
+
+    /**
+     * Remove um comando da lista de comandos.
+     * 
+     * @param comando Comando a ser removido do arraylist.
+     */
+    public void deletarComando(String comando) {
+        comandosValidos.remove(comando);
     }
 
     /**
@@ -37,19 +47,27 @@ public class PalavrasComando {
      * @return true se a string dada eh um comando valido,
      *         false se nao eh.
      */
+    // for (Map.Entry<String, Ambiente> item : saidas.entrySet()) {
     public boolean ehComando(String umaString) {
-        for (String comando : comandosValidos) {
-            if (comando.equals(umaString))
+        for (Map.Entry<String, String> comando : comandosValidos.entrySet()) {
+            if (comando.getKey().equals(umaString)) {
                 return true;
+            }
         }
         // se chegamos aqui, a string nao foi encontrada nos comandos.
         return false;
     }
 
+<<<<<<< HEAD
     public String getComandos() {
         String retorna = "";
         for (String comando : comandosValidos) {
             retorna += comando + "\n";
+=======
+    public void getComandos() {
+        for (Map.Entry<String, String> comando : comandosValidos.entrySet()) {
+            System.out.println(comando.getKey() + " - " + comando.getValue() + "\n");
+>>>>>>> 671c63605e9b82fb8df79f1e911d736b382c615b
         }
         return retorna;
     }

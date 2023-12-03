@@ -40,11 +40,10 @@ public class Analisador {
             palavra1 = tokenizer.next(); // pega a primeira palavra
             if (tokenizer.hasNext()) {
                 palavra2 = tokenizer.next(); // pega a segunda palavra
-                if (palavra2.equals("com")) {
-                    palavra2 = tokenizer.next();
-                }
             }
         }
+
+        tokenizer.close();
 
         // Agora verifica se esta palavra eh conhecida. Se for, cria um comando
         // com ela. Se nao, cria um comando "null" (para comando desconhecido)
@@ -58,8 +57,18 @@ public class Analisador {
     public String mostrarComandos() {
         return palavrasDeComando.getComandos();
     }
+<<<<<<< HEAD
     
     public void definirComando(String comando) {
         palavrasDeComando.setComando(comando);
+=======
+
+    public void definirComando(String comando, String descricao) {
+        palavrasDeComando.setComando(comando, descricao);
+    }
+
+    public void excluirComando(String comando) {
+        palavrasDeComando.deletarComando(comando);
+>>>>>>> 671c63605e9b82fb8df79f1e911d736b382c615b
     }
 }
