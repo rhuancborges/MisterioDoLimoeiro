@@ -2,11 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Esta classe eh parte da aplicacao "World of Zuul".
- * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
  * 
- * Essa classe guarda uma enumeracao de todos os comandos conhecidos do
- * jogo. Ela eh usada no reconhecimento de comandos como eles sao digitados.
  *
  * @author Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
  * @version 2011.07.31 (2016.02.01)
