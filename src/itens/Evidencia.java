@@ -13,7 +13,7 @@ public class Evidencia extends Item {
     /**
      * Construtor da classe Evidencia.
      * 
-     * @param nome      O nome da evidência.
+     * @param nome O nome da evidência.
      * @param descricao A descrição da evidência.
      */
     public Evidencia(String nome, String descricao) {

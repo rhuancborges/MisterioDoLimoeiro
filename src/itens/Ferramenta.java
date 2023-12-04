@@ -13,7 +13,7 @@ public class Ferramenta extends Item {
     /**
      * Construtor da classe Ferramenta.
      * 
-     * @param nome      O nome da ferramenta.
+     * @param nome O nome da ferramenta.
      * @param descricao A descrição da ferramenta.
      */
     public Ferramenta(String nome, String descricao) {
