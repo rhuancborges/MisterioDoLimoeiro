@@ -67,66 +67,93 @@ public class Jogo {
         // Cria os ambientes.
         // Completar com itens.
         delegacia = new Ambiente("Delegacia", "Você está na delegacia", null, "Jeremias",
-                "Alto, magro, cabelo preto, olhos castanhos, usa óculos",
                 "Olá, sou o Jeremias, o delegado da cidade. Estou investigando a morte da Carminha FruFru e por isso chamamos você, para que nos ajude com a busca.",
                 "", null, false);
 
-        praca = new Ambiente("Praca", "Você está na praça central", plano, "Denise", " a Denise",
+        praca = new Ambiente("Praca", "Você está na praça central", plano, "Denise",
                 "Obrigada por vir, detetive! Achei o corpo da minha amiga no lago e fiquei desesperadíssima",
                 "Isso me lembrou da última vez que vi a Carminha! Beijando um garoto na padaria", faca, false);
 
-        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", null, "Magali", " a Magali",
+        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", null, "Magali",
                 "Oi, detetive, não repara nesse tanto de melancia que comi. Estou mal pela morte da minha amiga!",
                 "Onde achou isso? Acho que temos que respeitar a privacidade dela!", bolsa, true);
 
-        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica", " a Mônica",
+        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica",
                 "AAAAAA, o Sansão não está aqui! Eu pego aquele peste do Cebolinha!",
                 "Sim, eu a usei! Mas eu precisei usá-la por motivo de força maior", arma, false);
 
-        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", veneno, "Cascão", " o Cascão",
+        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", veneno, "Cascão",
                 "O Cebolinha desapareceu, estou preocupado! Claro que me preocupo com a morte da Carminha, mas é diferente",
                 "Tá bom, eu falo a verdade! Antes da notícia da morte da Carminha, o Cebolinha estava aflito, me entregou o sansão e fugiu para a fazenda do Chico Bento",
                 balde, false);
 
-        escola = new Ambiente("Escola", "Você está na escola", bolsa, "Marina", " a Marina",
+        escola = new Ambiente("Escola", "Você está na escola", bolsa, "Marina",
                 "Quem faria uma coisa dessas? Realmente é um crime terrível",
                 "Eu me lembro de tudo! A Mônica sabe quem é o assassino e apagou a minha memória quando eu e o Franjinha quisemos denunciar",
                 pingente, false);
 
-        cinema = new Ambiente("Cinema", "Você está no cinema", pingente, "Franjinha", " o franjinha",
+        cinema = new Ambiente("Cinema", "Você está no cinema", pingente, "Franjinha",
                 "Eu não sei de nada! Não saí do meu laboratório em nenhum momento",
                 "A Arma... A arma que fiz estava dentro do Sansão", sansao, false);
 
-        padaria = new Ambiente("Padaria", "Você está na padaria", faca, "Quinzinho", " o quinzinho",
+        padaria = new Ambiente("Padaria", "Você está na padaria", faca, "Quinzinho",
                 "Desculpa a demora em atendê-lo! Estava enfaixando meu machucado",
                 "Estou chocado! Não posso acreditar que ela chegou a esse ponto!", plano, false);
 
-        bosque = new Ambiente("Bosque", "Você está no bosque", sansao, "Luiz M.", "Um homem com uma estranha camisa de uma xicará de café", "Lembre-se: sempre faça a modelagem antes da implementação.", null, null, false);
+        bosque = new Ambiente("Bosque", "Você está no bosque", sansao, "Luiz M.", "Lembre-se: sempre faça a modelagem antes da implementação.", null, null, false);
 
-        galpao = new Ambiente("Galpao", "Você está no galpão", balde, null, null, null, null, null, false);
+        galpao = new Ambiente("Galpao", "Você está no galpão", balde, null, null, null, null, false);
 
-        lago = new Ambiente("Lago", "Você está em frente ao lago", arma, null, null, null, null, null, false);
+        lago = new Ambiente("Lago", "Você está em frente ao lago", arma, null, null, null, null, false);
 
         pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", macarico, "Juca",
-                "o Juca",
                 "Eu tenho que conversar mesmo? Não estou me sentindo muito confortável",
                 "Ai meu Pai! A culpa foi toda minha!! Como fui capaz de deixar isso acontecer?", veneno, false);
 
         // Arrumar saídas.
         // Inicializa as saídas dos ambientes.
-        delegacia.setSaidas(null, praca, null, null, null, null);
-        praca.setSaidas(casaDaMonica, pastelariaJuca, padaria, delegacia, null, null);
-        casaDaMagali.setSaidas(null, casaDoCebola, pastelariaJuca, casaDaMonica, null, null);
-        casaDaMonica.setSaidas(null, casaDaMagali, praca, null, null, null);
-        casaDoCebola.setSaidas(null, null, lago, casaDaMagali, null, null);
-        escola.setSaidas(null, null, null, lago, null, null);
-        cinema.setSaidas(pastelariaJuca, bosque, null, padaria, null, null);
-        padaria.setSaidas(praca, cinema, null, null, null, null);
-        bosque.setSaidas(lago, null, null, cinema, null, galpao);
-        galpao.setSaidas(null, null, null, null, bosque, null);
-        lago.setSaidas(casaDoCebola, escola, bosque, pastelariaJuca, null, null);
-        pastelariaJuca.setSaidas(casaDaMagali, lago, cinema, praca, null, null);
+        delegacia.setSaidas("leste", praca);
 
+        praca.setSaidas("norte", casaDaMonica);
+        praca.setSaidas("leste", pastelariaJuca);
+        praca.setSaidas("sul", padaria);
+        praca.setSaidas("oeste", delegacia);
+
+        casaDaMagali.setSaidas("leste", casaDoCebola);
+        casaDaMagali.setSaidas("sul", pastelariaJuca);
+        casaDaMagali.setSaidas("oeste", casaDaMonica);
+
+        casaDaMonica.setSaidas("leste", casaDaMagali);
+        casaDaMonica.setSaidas("sul", praca);
+
+        casaDoCebola.setSaidas("sul", lago);
+        casaDoCebola.setSaidas("oeste", casaDaMagali);
+
+        escola.setSaidas("oeste", lago);
+
+        cinema.setSaidas("norte", pastelariaJuca);
+        cinema.setSaidas("leste", bosque);
+        cinema.setSaidas("oeste", padaria);
+
+        padaria.setSaidas("norte", praca);
+        padaria.setSaidas("leste", cinema);
+
+        bosque.setSaidas("norte", lago);
+        bosque.setSaidas("oeste", cinema);
+        bosque.setSaidas("baixo", galpao);
+
+        galpao.setSaidas("cima", bosque);
+        
+        lago.setSaidas("norte", casaDoCebola);
+        lago.setSaidas("leste", escola);
+        lago.setSaidas("sul", bosque);
+        lago.setSaidas("oeste", pastelariaJuca);
+
+        pastelariaJuca.setSaidas("norte", casaDaMagali);
+        pastelariaJuca.setSaidas("leste", lago);
+        pastelariaJuca.setSaidas("sul", cinema);
+        pastelariaJuca.setSaidas("oeste", praca);
+        
         // O jogo comeca na delegacia.
         ambienteAtual = delegacia; // O jogo começa do lado de fora.
     }

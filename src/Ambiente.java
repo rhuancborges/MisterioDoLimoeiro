@@ -3,7 +3,7 @@
  * A classe Ambiente é responsável por representar um ambiente no jogo, com descrição,
  * saídas, um possível NPC (Personagem não jogador) e um item associado ao ambiente.
  * 
- * @author José Airton Rios Júnior e Lara Ramos Linhares
+ * @author João Pedro Nogueira Lucas, José Airton Rios Júnior e Lara Ramos Linhares
  * @version 2023.12.03
  */
 
@@ -27,13 +27,12 @@ public class Ambiente {
      * @param descricao A descrição do ambiente.
      * @param item O item presente no ambiente.
      * @param nomePersonagem O nome do NPC presente no ambiente (pode ser nulo se não houver NPC).
-     * @param descricaoPersonagem A descrição do NPC presente no ambiente.
      * @param falaInicial A fala inicial do NPC.
      * @param falaFinal A fala final do NPC.
      * @param evidenciaQueAfeta A evidência que afeta o NPC.
      * @param assassino Indica se o NPC é um assassino.
      */
-    public Ambiente(String nome, String descricao, Item item, String nomePersonagem, String descricaoPersonagem,
+    public Ambiente(String nome, String descricao, Item item, String nomePersonagem,
             String falaInicial, String falaFinal, Evidencia evidenciaQueAfeta, boolean assassino) {
         saidas = new HashMap<>();
         this.nome = nome;
@@ -41,7 +40,7 @@ public class Ambiente {
         if (nomePersonagem == null) {
             this.npc = null;
         } else {
-            this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal, evidenciaQueAfeta,
+            this.npc = new Personagem(nomePersonagem, falaInicial, falaFinal, evidenciaQueAfeta,
                     assassino);
         }
         this.item = item;
@@ -50,20 +49,11 @@ public class Ambiente {
     /**
      * Define as saídas do ambiente para direções específicas.
      *
-     * @param norte O ambiente ao norte.
-     * @param leste O ambiente ao leste.
-     * @param sul O ambiente ao sul.
-     * @param oeste O ambiente ao oeste.
-     * @param cima O ambiente acima.
-     * @param baixo O ambiente abaixo.
+     * @param direcao A direcao cardial da saída.
+     * @param saida O ambiente correspondente a saíde.
      */
-    public void setSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste, Ambiente cima, Ambiente baixo) {
-        saidas.put("norte", norte);
-        saidas.put("leste", leste);
-        saidas.put("sul", sul);
-        saidas.put("oeste", oeste);
-        saidas.put("cima", cima);
-        saidas.put("baixo", baixo);
+    public void setSaidas(String direcao, Ambiente saida) {
+        saidas.put(direcao, saida);
     }
 
     /**
@@ -93,8 +83,7 @@ public class Ambiente {
     public String getLongaDescricao() {
         String retornoDescricao = descricao + ".\n" + getStringSaida() + "\n";
         if (npc != null) {
-            retornoDescricao += "Você também vê " + npc.getNome() + " e observa " + npc.getNome()
-                    + npc.getDescricao() + ".\n";
+            retornoDescricao += "Você também vê " + npc.getNome() + ".\n";
         } else {
             retornoDescricao += "Não há ninguém aqui.\n";
         }
@@ -145,18 +134,6 @@ public class Ambiente {
     public String getNomePersonagem() {
         if (npc != null) {
             return npc.getNome();
-        }
-        return "Não há ninguém aqui";
-    }
-
-    /**
-     * Retorna a descrição do personagem presente no ambiente.
-     *
-     * @return A descrição do personagem do ambiente.
-     */
-    public String getDescricaoPersonagem() {
-        if (npc != null) {
-            return npc.getDescricao();
         }
         return "Não há ninguém aqui";
     }
