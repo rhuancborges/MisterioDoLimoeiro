@@ -87,7 +87,7 @@ public class Tela {
 
           JPanel painelCentro = new JPanel();
           painelCentro.setLayout(new FlowLayout());
-          ImageIcon imagem = new ImageIcon("./src/mapa.jpg");
+          ImageIcon imagem = new ImageIcon("mapa.jpg");
           JLabel labelImagem = new JLabel(imagem);
           painelCentro.add(labelImagem);
 
