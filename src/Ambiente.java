@@ -1,24 +1,15 @@
 
 /**
- * Classe Ambiente - um ambiente em um jogo adventure.
- *
- * Esta classe eh parte da aplicacao "World of Zuul".
- * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.  
- *
- * Um "Ambiente" representa uma localizacao no cenario do jogo. Ele eh
- * conectado aos outros ambientes atraves de saidas. As saidas sao
- * nomeadas como norte, sul, leste e oeste. Para cada direcao, o ambiente
- * guarda uma referencia para o ambiente vizinho, ou null se nao ha
- * saida naquela direcao.
+ * A classe Ambiente é responsável por representar um ambiente no jogo, com descrição,
+ * saídas, um possível NPC (Personagem não jogador) e um item associado ao ambiente.
  * 
- * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
- * @version 2011.07.31 (2016.02.01)
+ * @author João Pedro Nogueira Lucas, José Airton Rios Júnior e Lara Ramos Linhares
+ * @version 2023.12.03
  */
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-
 import itens.Item;
 import itens.Evidencia;
 
@@ -30,72 +21,69 @@ public class Ambiente {
     private Item item;
 
     /**
-     * Cria um ambiente com a "descricao" passada. Inicialmente, ele
-     * nao tem saidas. "descricao" eh algo como "uma cozinha" ou
-     * "
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "um jardim aberto".
-     * 
-     * @param descricao A descricao do ambiente.
+     * Cria um ambiente com a descrição passada, opcionalmente com um NPC e um item.
+     *
+     * @param nome O nome do ambiente.
+     * @param descricao A descrição do ambiente.
+     * @param item O item presente no ambiente.
+     * @param nomePersonagem O nome do NPC presente no ambiente (pode ser nulo se não houver NPC).
+     * @param falaInicial A fala inicial do NPC.
+     * @param falaFinal A fala final do NPC.
+     * @param evidenciaQueAfeta A evidência que afeta o NPC.
+     * @param assassino Indica se o NPC é um assassino.
      */
-    public Ambiente(String nome, String descricao, Item item, String nomePersonagem, String descricaoPersonagem,
+    public Ambiente(String nome, String descricao, Item item, String nomePersonagem,
             String falaInicial, String falaFinal, Evidencia evidenciaQueAfeta, boolean assassino) {
         saidas = new HashMap<>();
-
         this.nome = nome;
         this.descricao = descricao;
         if (nomePersonagem == null) {
             this.npc = null;
         } else {
-            this.npc = new Personagem(nomePersonagem, descricaoPersonagem, falaInicial, falaFinal, evidenciaQueAfeta,
+            this.npc = new Personagem(nomePersonagem, falaInicial, falaFinal, evidenciaQueAfeta,
                     assassino);
         }
         this.item = item;
     }
 
     /**
-     * Define as saidas do ambiente. Cada direcao ou leva a um
-     * outro ambiente ou eh null (nenhuma saida para la).
-     * 
-     * @param norte A saida norte.
-     * @param leste A saida leste.
-     * @param sul   A saida sul.
-     * @param oeste A saida oeste.
+     * Define as saídas do ambiente para direções específicas.
+     *
+     * @param direcao A direcao cardial da saída.
+     * @param saida O ambiente correspondente a saíde.
      */
-    public void setSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste, Ambiente cima, Ambiente baixo) {
-        saidas.put("norte", norte);
-        saidas.put("leste", leste);
-        saidas.put("sul", sul);
-        saidas.put("oeste", oeste);
-        saidas.put("cima", cima);
-        saidas.put("baixo", baixo);
+    public void setSaidas(String direcao, Ambiente saida) {
+        saidas.put(direcao, saida);
     }
 
     /**
+     * Retorna o nome do ambiente.
+     *
      * @return O nome do ambiente.
      */
-
     public String getNome() {
         return nome;
     }
 
     /**
-     * @return A descricao do ambiente.
+     * Retorna a descrição breve do ambiente.
+     *
+     * @return A descrição breve do ambiente.
      */
     public String getPequenaDescricao() {
         return descricao;
     }
 
     /**
-     * @return A descricao completa do ambiente e suas saidas.
+     * Retorna a descrição completa do ambiente, incluindo suas saídas e a presença
+     * de NPCs.
+     *
+     * @return A descrição completa do ambiente.
      */
-
     public String getLongaDescricao() {
         String retornoDescricao = descricao + ".\n" + getStringSaida() + "\n";
         if (npc != null) {
-            retornoDescricao += "Você também vê " + npc.getNome() + " e observa " + npc.getNome()
-                    + npc.getDescricao() + ".\n";
+            retornoDescricao += "Você também vê " + npc.getNome() + ".\n";
         } else {
             retornoDescricao += "Não há ninguém aqui.\n";
         }
@@ -103,10 +91,10 @@ public class Ambiente {
     }
 
     /**
-     * @return A lista de saídas com o lugar que levam. Ex.: oeste: cozinha leste:
-     *         Não há saída
+     * Retorna a lista de saídas com os destinos correspondentes.
+     *
+     * @return A lista de saídas com os destinos correspondentes.
      */
-
     private String getStringSaida() {
         String returnString = "Saídas: ";
         for (Map.Entry<String, Ambiente> item : saidas.entrySet()) {
@@ -120,28 +108,29 @@ public class Ambiente {
     }
 
     /**
-     * @return O personagem do ambiente.
+     * Retorna o personagem presente no ambiente.
+     *
+     * @return O personagem presente no ambiente.
      */
-
     public Personagem getPersonagem() {
         return npc;
     }
 
     /**
-     * @return O Ambiente que uma direção leva (ou null se não houver saída nessa
-     *         direção).
+     * Retorna o ambiente para o qual uma determinada direção leva.
+     *
+     * @param direcao A direção desejada.
+     * @return O ambiente para o qual a direção leva (ou null se não houver saída).
      */
-
     public Ambiente getSaida(String direcao) {
         return saidas.get(direcao);
     }
 
-    // ======================================PERSONAGENS======================================
-
     /**
+     * Retorna o nome do personagem presente no ambiente.
+     *
      * @return O nome do personagem do ambiente.
      */
-
     public String getNomePersonagem() {
         if (npc != null) {
             return npc.getNome();
@@ -150,20 +139,10 @@ public class Ambiente {
     }
 
     /**
-     * @return A descrição do personagem do ambiente.
-     */
-
-    public String getDescricaoPersonagem() {
-        if (npc != null) {
-            return npc.getDescricao();
-        }
-        return "Não há ninguém aqui";
-    }
-
-    /**
+     * Retorna a fala inicial do personagem presente no ambiente.
+     *
      * @return A fala inicial do personagem do ambiente.
      */
-
     public String getFalaPersonagem() {
         if (npc != null) {
             return npc.getFalaAtual();
@@ -172,21 +151,21 @@ public class Ambiente {
     }
 
     /**
-     * @return Define se a fala do personagem deve ser alterada
+     * Atualiza a fala do personagem com base nas evidências fornecidas.
+     *
+     * @param evidencias Lista de evidências que afetam a fala do personagem.
      */
-
     public void afetaFalaPersonagem(List<Evidencia> evidencias) {
         if (npc != null) {
             npc.afetaFala(evidencias);
         }
     }
 
-    // ======================================ITENS======================================
-
     /**
-     * @return O nome do item do ambiente.
+     * Retorna o item presente no ambiente.
+     *
+     * @return O item do ambiente.
      */
-
     public Item getItem() {
         return item;
     }
@@ -194,9 +173,8 @@ public class Ambiente {
     /**
      * Remove o item do ambiente.
      * 
-     * @return O item removido.
+     * @return O item removido do ambiente.
      */
-
     public Item removerItem() {
         Item itemRemovido = item;
         item = null;

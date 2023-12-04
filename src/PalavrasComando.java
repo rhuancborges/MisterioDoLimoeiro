@@ -2,31 +2,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Esta classe eh parte da aplicacao "World of Zuul".
- * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
- * 
- * Essa classe guarda uma enumeracao de todos os comandos conhecidos do
- * jogo. Ela eh usada no reconhecimento de comandos como eles sao digitados.
+ * A classe PalavrasComando é responsável por manter uma enumeração de todos os
+ * comandos conhecidos do jogo e é usada para reconhecer comandos conforme são
+ * digitados.
  *
- * @author Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
- * @version 2011.07.31 (2016.02.01)
+ * @author José Airton Rios Júnior e Lara Ramos Linhares
+ * @version 2023.12.03
  */
-
 public class PalavrasComando {
-    // um vetor constante que guarda todas as palavras de comandos validas
+    // Um vetor constante que armazeba todas as palavras de comandos válidas
     private static HashMap<String, String> comandosValidos;
 
     /**
-     * Construtor - inicializa as palavras de comando.
+     * Construtor que inicializa as palavras de comando.
      */
     public PalavrasComando() {
         comandosValidos = new HashMap<String, String>();
     }
 
     /**
-     * Insere os comandos validos na lista de comandos.
+     * Insere um novo comando válido na lista de comandos.
      * 
-     * @param comando Novo comando a ser inserido no arraylist.
+     * @param comando   Novo comando a ser inserido no HashMap.
+     * @param descricao Descrição associada ao comando.
      */
     public void setComando(String comando, String descricao) {
         comandosValidos.put(comando, descricao);
@@ -35,29 +33,33 @@ public class PalavrasComando {
     /**
      * Remove um comando da lista de comandos.
      * 
-     * @param comando Comando a ser removido do arraylist.
+     * @param comando Comando a ser removido do HashMap.
      */
     public void deletarComando(String comando) {
         comandosValidos.remove(comando);
     }
 
     /**
-     * Verifica se uma dada String eh uma palavra de comando valida.
+     * Verifica se uma determinada String é uma palavra de comando válida.
      * 
-     * @return true se a string dada eh um comando valido,
-     *         false se nao eh.
+     * @param umaString A string a ser verificada.
+     * @return true se a string dada é um comando válido, false caso contrário.
      */
-    // for (Map.Entry<String, Ambiente> item : saidas.entrySet()) {
     public boolean ehComando(String umaString) {
         for (Map.Entry<String, String> comando : comandosValidos.entrySet()) {
             if (comando.getKey().equals(umaString)) {
                 return true;
             }
         }
-        // se chegamos aqui, a string nao foi encontrada nos comandos.
+        // Se chegamos aqui, a string não foi encontrada nos comandos.
         return false;
     }
 
+    /**
+     * Retorna uma representação em String de todos os comandos válidos.
+     * 
+     * @return Uma String contendo todos os comandos válidos e suas descrições.
+     */
     public String getComandos() {
         String retorna = "";
         for (Map.Entry<String, String> comando : comandosValidos.entrySet()) {

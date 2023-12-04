@@ -1,73 +1,65 @@
 /**
- * Esta classe eh parte da aplicacao "World of Zuul".
- * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.  
+ * A classe Comando é responsável por armazenar informações sobre um comando
+ * inserido pelo usuário, que consiste em uma palavra de comando e,
+ * opcionalmente, uma segunda palavra.
  *
- * Essa classe guarda informacoes sobre um comando que foi digitado pelo 
- * usuario. Um comando atualmente consiste em duas strings: uma palavra
- * de comando e uma segunda palavra (por exemplo, se o campo for "pegar
- * mapa", entao as duas strings obviamente serao "pegar" e "mapa").
+ * Se o comando não for reconhecido, a palavra de comando é definida como null.
+ * Caso o comando contenha apenas uma palavra, a segunda palavra é também
+ * definida como null.
  * 
- * Isso eh usado assim: comandos ja estao validados como comandos validos
- * Se o usuario entrou um comando invalido (uma palavra que nao eh
- * conhecida) entao o a palavra de comando eh <null>.
- *
- * Se o comando tem so uma palavra, a segunda palavra eh <null>
- * 
- * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
- * @version 2011.07.31 (2016.02.01)
+ * @author João Pedro Nogueira Lucas e Lara Ramos Linhares
+ * @version 2023.12.03
  */
 
-public class Comando
-{
+public class Comando {
     private String palavraDeComando;
     private String segundaPalavra;
 
     /**
-     * Cria um objeto comando. Primeira e segunda palavra devem ser 
-     * fornecidas, mas qualquer uma (ou ambas) podem ser null.
-     * @param primeiraPalavra A primeira palavra do comando. Null se
-     * 						  o comando nao foi reconhecido
-     * @param segundaPalavra A segunda palavra do comando.
+     * Constrói um objeto Comando.
+     *
+     * @param primeiraPalavra A primeira palavra do comando. Pode ser null se o comando não foi reconhecido.
+     * @param segundaPalavra  A segunda palavra do comando.
      */
-    public Comando(String primeiraPalavra, String segundaPalavra)
-    {
+    public Comando(String primeiraPalavra, String segundaPalavra) {
         palavraDeComando = primeiraPalavra;
         this.segundaPalavra = segundaPalavra;
     }
 
     /**
-     * Retorna a palavra de comando (a primeira palavra) deste comando.
-     * Se o comando nao foi entendido, o resultado eh null.
-     * @return A palavra de comando.
+     * Obtém a palavra de comando deste comando.
+     *
+     * @return A palavra de comando. Pode ser null se o comando não foi reconhecido.
      */
-    public String getPalavraDeComando()
-    {
+    public String getPalavraDeComando() {
         return palavraDeComando;
     }
 
     /**
-     * @return A segunda palavra deste comando. Retorna null se 
-     * nao existe segunda palavra.
+     * Obtém a segunda palavra deste comando.
+     *
+     * @return A segunda palavra do comando. Pode ser null se não existe segunda
+     *         palavra.
      */
-    public String getSegundaPalavra()
-    {
+    public String getSegundaPalavra() {
         return segundaPalavra;
     }
 
     /**
-     * @return true se o comando nao foi entendido.
+     * Verifica se o comando não foi reconhecido.
+     *
+     * @return true se o comando não foi entendido; false caso contrário.
      */
-    public boolean ehDesconhecido()
-    {
+    public boolean ehDesconhecido() {
         return (palavraDeComando == null);
     }
 
     /**
-     * @return true se o comando tem uma segunda palavra.
+     * Verifica se o comando possui uma segunda palavra.
+     *
+     * @return true se o comando tem uma segunda palavra; false caso contrário.
      */
-    public boolean temSegundaPalavra()
-    {
+    public boolean temSegundaPalavra() {
         return (segundaPalavra != null);
     }
 }
-

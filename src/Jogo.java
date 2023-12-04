@@ -1,27 +1,22 @@
 
 /**
- *  Essa eh a classe principal da aplicação "Misterio do Limoeiro"
- *  "Misterio do Limoeiro" eh um jogo de investigacao baseado em texto.
- *  Usuarios podem caminhar entre cenarios, capturar itens e conversar com personagens. 
- *  A ideia eh o jogador descobrir quem eh o assassino da historia, deduzindo pistas ao longo
- * dos cenarios e delatar ao delegado.
- *  Se o delegado receber o nome correto do assassino, o jogador ganha o jogo. Caso receba outro
- * nome, o jogo termina e o jogador perde, pois o assassino fugiu.
- * 
- *  Para jogar esse jogo, crie uma instancia dessa classe e chame o metodo
- *  "jogar". 
- * 
- *  Essa classe principal cria e inicializa todas as outras: ela cria os
- *  ambientes, cria o analisador e comeca o jogo. Ela avalia,
- *  executa os comandos que o analisador retorna e tambem recebe comandos da interface grafica
- * 
- * @author  Rhuan, Lara, José Airton
- * @version 2.0
+ * A classe Jogo é a principal da aplicação "Misterio do Limoeiro", um jogo de investigação 
+ * baseado em texto. Os jogadores podem caminhar entre cenários, capturar itens e conversar 
+ * com personagens. O objetivo é descobrir quem é o assassino da história, deduzindo pistas 
+ * ao longo dos cenários e delatar ao delegado. Se o delegado receber o nome correto do assassino, 
+ * o jogador ganha o jogo. Caso receba outro nome, o jogo termina, e o jogador perde, pois o 
+ * assassino fugiu.
+ *
+ * Para jogar esse jogo, crie uma instância dessa classe e chame o método "jogar".
+ *
+ * Essa classe principal cria e inicializa todas as outras: ela cria os ambientes, cria o analisador 
+ * e começa o jogo.Ela avalia, executa os comandos que o analisador retorna e também recebe comandos 
+ * da interface gráfica.
+ *
+ * @author João Pedro Nogueira Lucas, Lara Ramos Linhares, José Airton Rios Júnior e Rhuan Campideli Borges
+ * @version 2023.12.03
  */
-
-
 import itens.*;
-
 
 public class Jogo {
     private Analisador analisador;
@@ -30,6 +25,11 @@ public class Jogo {
     private String assassino;
     private Tela tela;
 
+    /**
+     * Construtor da classe Jogo.
+     * Inicializa o analisador, inventário, cria os ambientes, define os comandos
+     * conhecidos e gera o inventário inicial.
+     */
     public Jogo() {
         analisador = new Analisador();
         inventario = new Inventario();
@@ -39,14 +39,13 @@ public class Jogo {
         tela = new Tela();
     }
 
-    /*
-     * Cria todos os ambientes e liga as saidas deles.
+    /**
+     * Cria todos os ambientes e liga as saídas deles.
      * Cada ambiente tem até 6 saídas, uma para cada direção cardeal e uma para cima
      * e uma para baixo.
      * Cada ambiente tem um item, que é uma evidência.
      * Cada ambiente tem um personagem, que é um suspeito.
      */
-
     private void criarAmbientes() {
         Ambiente delegacia, praca, casaDaMonica, casaDaMagali, casaDoCebola, escola, cinema,
                 padaria, bosque, galpao, lago, pastelariaJuca;
@@ -58,86 +57,111 @@ public class Jogo {
         faca = new Evidencia("faca", "Uma faca de cozinha coberta de sangue");
         pingente = new Evidencia("pingente", "Um pingente de ouro com as iniciais 'CF'");
         balde = new Evidencia("balde", "Um balde com água");
-        sansao = new Evidencia("sansao", "Um Sansão de pelúcia, porém coberto de sangue e com um corte profundo na barriga");
+        sansao = new Evidencia("sansao",
+                "Um Sansão de pelúcia, porém coberto de sangue e com um corte profundo na barriga");
         arma = new Evidencia("arma da amnésia", "uma arma tecnológica capaz de apagar a memória de alguém");
         plano = new Evidencia("plano do cebolinha", "um plano elaborado por Cebolinha num papel levemente queimado");
 
-        this.assassino = "Magali"; // define o assassino
+        this.assassino = "Magali"; // Define o assassino.
 
-        // cria os ambientes
-
-        // COMPLETAR COM ITENS
-
+        // Cria os ambientes.
+        // Completar com itens.
         delegacia = new Ambiente("Delegacia", "Você está na delegacia", null, "Jeremias",
-                "Alto, magro, cabelo preto, olhos castanhos, usa óculos",
                 "Olá, sou o Jeremias, o delegado da cidade. Estou investigando a morte da Carminha FruFru e por isso chamamos você, para que nos ajude com a busca.",
                 "", null, false);
 
-        praca = new Ambiente("Praca", "Você está na praça central", plano, "Denise", " a Denise",
+        praca = new Ambiente("Praca", "Você está na praça central", plano, "Denise",
                 "Obrigada por vir, detetive! Achei o corpo da minha amiga no lago e fiquei desesperadíssima",
                 "Isso me lembrou da última vez que vi a Carminha! Beijando um garoto na padaria", faca, false);
 
-        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", null, "Magali", " a Magali",
+        casaDaMagali = new Ambiente("Casa da Magali", "Você está na casa da Magali", null, "Magali",
                 "Oi, detetive, não repara nesse tanto de melancia que comi. Estou mal pela morte da minha amiga!",
                 "Onde achou isso? Acho que temos que respeitar a privacidade dela!", bolsa, true);
 
-        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica", " a Mônica",
+        casaDaMonica = new Ambiente("Casa da Monica", "Você está na casa da Mônica", null, "Mônica",
                 "AAAAAA, o Sansão não está aqui! Eu pego aquele peste do Cebolinha!",
                 "Sim, eu a usei! Mas eu precisei usá-la por motivo de força maior", arma, false);
 
-        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", veneno, "Cascão", " o Cascão",
+        casaDoCebola = new Ambiente("Casa do Cebola", "Você está na casa do Cebola", veneno, "Cascão",
                 "O Cebolinha desapareceu, estou preocupado! Claro que me preocupo com a morte da Carminha, mas é diferente",
                 "Tá bom, eu falo a verdade! Antes da notícia da morte da Carminha, o Cebolinha estava aflito, me entregou o sansão e fugiu para a fazenda do Chico Bento",
                 balde, false);
 
-        escola = new Ambiente("Escola", "Você está na escola", bolsa, "Marina", " a Marina",
+        escola = new Ambiente("Escola", "Você está na escola", bolsa, "Marina",
                 "Quem faria uma coisa dessas? Realmente é um crime terrível",
                 "Eu me lembro de tudo! A Mônica sabe quem é o assassino e apagou a minha memória quando eu e o Franjinha quisemos denunciar",
                 pingente, false);
 
-        cinema = new Ambiente("Cinema", "Você está no cinema", pingente, "Franjinha", " o franjinha",
+        cinema = new Ambiente("Cinema", "Você está no cinema", pingente, "Franjinha",
                 "Eu não sei de nada! Não saí do meu laboratório em nenhum momento",
                 "A Arma... A arma que fiz estava dentro do Sansão", sansao, false);
 
-        padaria = new Ambiente("Padaria", "Você está na padaria", faca, "Quinzinho", " o quinzinho",
+        padaria = new Ambiente("Padaria", "Você está na padaria", faca, "Quinzinho",
                 "Desculpa a demora em atendê-lo! Estava enfaixando meu machucado",
                 "Estou chocado! Não posso acreditar que ela chegou a esse ponto!", plano, false);
 
-        bosque = new Ambiente("Bosque", "Você está no bosque", sansao, null, null, null, null, null, false);
+        bosque = new Ambiente("Bosque", "Você está no bosque", sansao, "Luiz M.", "Lembre-se: sempre faça a modelagem antes da implementação.", null, null, false);
 
-        galpao = new Ambiente("Galpao", "Você está no galpão", balde, null, null, null, null, null, false);
+        galpao = new Ambiente("Galpao", "Você está no galpão", balde, null, null, null, null, false);
 
-        lago = new Ambiente("Lago", "Você está em frente ao lago", arma, null, null, null, null, null, false);
+        lago = new Ambiente("Lago", "Você está em frente ao lago", arma, null, null, null, null, false);
 
         pastelariaJuca = new Ambiente("Pastelaria do Juca", "Você está na pastelaria do Juca", macarico, "Juca",
-                "o Juca",
                 "Eu tenho que conversar mesmo? Não estou me sentindo muito confortável",
                 "Ai meu Pai! A culpa foi toda minha!! Como fui capaz de deixar isso acontecer?", veneno, false);
 
-        // ARRUMAR SAÍDAS
-        // inicializa as saidas dos ambientes
-        delegacia.setSaidas(null, praca, null, null, null, null);
-        praca.setSaidas(casaDaMonica, pastelariaJuca, padaria, delegacia, null, null);
-        casaDaMagali.setSaidas(null, casaDoCebola, pastelariaJuca, casaDaMonica, null, null);
-        casaDaMonica.setSaidas(null, casaDaMagali, praca, null, null, null);
-        casaDoCebola.setSaidas(null, null, lago, casaDaMagali, null, null);
-        escola.setSaidas(null, null, null, lago, null, null);
-        cinema.setSaidas(pastelariaJuca, bosque, null, padaria, null, null);
-        padaria.setSaidas(praca, cinema, null, null, null, null);
-        bosque.setSaidas(lago, null, null, cinema, null, galpao);
-        galpao.setSaidas(null, null, null, null, bosque, null);
-        lago.setSaidas(casaDoCebola, escola, bosque, pastelariaJuca, null, null);
-        pastelariaJuca.setSaidas(casaDaMagali, lago, cinema, praca, null, null);
+        // Arrumar saídas.
+        // Inicializa as saídas dos ambientes.
+        delegacia.setSaidas("leste", praca);
 
-        // o jogo comeca na delegacia
-        ambienteAtual = delegacia; // o jogo começa do lado de fora
+        praca.setSaidas("norte", casaDaMonica);
+        praca.setSaidas("leste", pastelariaJuca);
+        praca.setSaidas("sul", padaria);
+        praca.setSaidas("oeste", delegacia);
+
+        casaDaMagali.setSaidas("leste", casaDoCebola);
+        casaDaMagali.setSaidas("sul", pastelariaJuca);
+        casaDaMagali.setSaidas("oeste", casaDaMonica);
+
+        casaDaMonica.setSaidas("leste", casaDaMagali);
+        casaDaMonica.setSaidas("sul", praca);
+
+        casaDoCebola.setSaidas("sul", lago);
+        casaDoCebola.setSaidas("oeste", casaDaMagali);
+
+        escola.setSaidas("oeste", lago);
+
+        cinema.setSaidas("norte", pastelariaJuca);
+        cinema.setSaidas("leste", bosque);
+        cinema.setSaidas("oeste", padaria);
+
+        padaria.setSaidas("norte", praca);
+        padaria.setSaidas("leste", cinema);
+
+        bosque.setSaidas("norte", lago);
+        bosque.setSaidas("oeste", cinema);
+        bosque.setSaidas("baixo", galpao);
+
+        galpao.setSaidas("cima", bosque);
+        
+        lago.setSaidas("norte", casaDoCebola);
+        lago.setSaidas("leste", escola);
+        lago.setSaidas("sul", bosque);
+        lago.setSaidas("oeste", pastelariaJuca);
+
+        pastelariaJuca.setSaidas("norte", casaDaMagali);
+        pastelariaJuca.setSaidas("leste", lago);
+        pastelariaJuca.setSaidas("sul", cinema);
+        pastelariaJuca.setSaidas("oeste", praca);
+        
+        // O jogo comeca na delegacia.
+        ambienteAtual = delegacia; // O jogo começa do lado de fora.
     }
 
-    /*
-     * Define os comandos que são conhecidos.
+    /**
+     * Define os comandos que são conhecidos pelo analisador.
      */
-
-    private void gerarComandos() { // ADICIONAR DESCRIÇÃO DOS COMANDOS
+    private void gerarComandos() { // Adicionar descrição dos itens.
         analisador.definirComando("ajuda", "Mostra os comandos disponíveis");
         analisador.definirComando("ir", "Vai para um ambiente, digite 'ir' e a direção");
         analisador.definirComando("observar", "Observa o ambiente atual e dá as informações sobre ele");
@@ -149,15 +173,14 @@ public class Jogo {
         analisador.definirComando("sair", "Sai do jogo");
     }
 
-    /*
-     * Define os itens que o protagonista possui no inicio do jogo.
+    /**
+     * Define os itens que o protagonista possui no início do jogo.
      */
-
-    private void gerarInventarioInicial() { // COLOCAR TODAS AQUI COMO FERRAMENTAS
+    private void gerarInventarioInicial() { // Colocar todas aqui como ferramentas.
         Item lupa, mapa, carteira, distintivo;
         lupa = new Ferramenta("lupa", "Uma lupa de detetive");
         mapa = new Ferramenta("mapa", "Um mapa da cidade");
-        carteira = new Consumivel("carteira", "A carteira do detetive", 2);
+        carteira = new Ferramenta("carteira", "A carteira do detetive");
         distintivo = new Ferramenta("distintivo", "O distintivo do detetive");
         inventario.adicionarItem(lupa);
         inventario.adicionarItem(mapa);
@@ -165,41 +188,44 @@ public class Jogo {
         inventario.adicionarItem(distintivo);
     }
 
-    /*
-     * Rotina principal do jogo. Fica em loop ate terminar o jogo.
+    /**
+     * Rotina principal do jogo. Fica em loop até terminar o jogo.
      */
-
     public void jogar() {
         imprimirBoasVindas();
-        // Entra no loop principal. Aqui nos repetidamente lemos comandos e
-        // os executamos ate o jogo terminar.
-        tela.exibir(this);  
+        // Entra no loop principal. Aqui lê-se e executa-se os comandos repetidamente.
+        tela.exibir(this);
     }
 
-    public void receberComando(String c){
+    /**
+     * Recebe um comando da classe Tela e o repassa para processamento.
+     * 
+     * @param c Comando recebido da interface gráfica.
+     */
+    public void receberComando(String c) {
         Comando comando = analisador.pegarComando(c);
-        if(processarComando(comando)){
+        if (processarComando(comando)) {
             tela.fecharJanela();
         }
     }
 
+    /**
+     * Imprime a mensagem de boas-vindas ao iniciar o jogo.
+     */
     private void imprimirBoasVindas() {
-        
-        tela.adicionarNaTela("Bem-vindo ao Mundo de Mônica Jovem!");
-        tela.adicionarNaTela("Mônica Jovem é um jogo de aventura, incrivelmente chato.");
+        tela.adicionarNaTela("Detetive, precisamos de ajuda pra resolver o Mistério Do Limoeiro!");
+        tela.adicionarNaTela("Podemos contar com você?");
         tela.adicionarNaTela("Digite 'ajuda' se voce precisar de ajuda.");
         tela.adicionarNaTela(" ");
         tela.adicionarNaTela(ambienteAtual.getPequenaDescricao());
-
     }
 
     /**
-     * Dado um comando, processa-o (ou seja, executa-o) Se o comando for
-     * desconhecido, o jogador eh avisado.
+     * Processa o comando fornecido pelo jogador. Se o comando for desconhecido, o
+     * jogador é avisado.
      * 
      * @param comando O comando a ser processado.
-     * 
-     * @return true se o comando finaliza o jogo, false caso contrario.
+     * @return true se o comando finaliza o jogo, false caso contrário.
      */
     private boolean processarComando(Comando comando) {
         boolean querSair = false;
@@ -230,14 +256,12 @@ public class Jogo {
             querSair = sair(comando);
         else
             tela.adicionarNaTela("Comando desconhecido... Por favor insira um comando válido!");
-
         return querSair;
     }
 
-    /*
+    /**
      * Imprime os comandos que o jogador pode usar.
      */
-
     private void imprimirAjuda() {
         tela.adicionarNaTela(" ");
         tela.adicionarNaTela("Suas palavras de comando sao:");
@@ -246,19 +270,18 @@ public class Jogo {
     }
 
     /**
-     * Tenta ir para um ambiente. Se existe uma saida entra no ambiente
-     * 
-     * @param comando Comando contendo "ir" e a direcao para onde ir.
+     * Tenta ir para um ambiente. Se existe uma saída, entra no ambiente.
+     *
+     * @param comando Comando contendo "ir" e a direção para onde ir.
      */
-
     private void irParaAmbiente(Comando comando) {
         if (!comando.temSegundaPalavra()) {
-            // se nao ha segunda palavra, nao sabemos pra onde ir...
+            // Se não há segunda palavra, não se sabe para onde ir...
             tela.adicionarNaTela("Ir para onde? Informe novamente...");
             return;
         }
 
-        analisador.excluirComando("pegar"); // Reseta o pegar dos ambientes
+        analisador.excluirComando("pegar"); // Reseta o comando "pegar" dos ambientes
 
         String direcao = comando.getSegundaPalavra();
 
@@ -274,9 +297,9 @@ public class Jogo {
     }
 
     /**
-     * Dá uma descrição mais detalhada do ambiente atual, com saídas e personagens.
+     * Fornece uma descrição mais detalhada do ambiente atual, com saídas e
+     * personagens.
      */
-
     private void observar() {
         if (inventario.contemItem("mapa")) {
             tela.adicionarNaTela(ambienteAtual.getLongaDescricao());
@@ -288,7 +311,6 @@ public class Jogo {
     /**
      * Conversa com o personagem do ambiente atual.
      */
-
     private void conversarComPersonagem() {
         // Adicionar a lógica do item - Se um dado item estiver no inventário, o
         // personagem tem uma fala diferente
@@ -299,9 +321,8 @@ public class Jogo {
     /**
      * Olha com a lupa o ambiente atual.
      */
-
     private void procurarComLupa() {
-        if (inventario.contemItem("lupa")) { // Caso venha a ser implentado algo em que o protagonista perde a lupa
+        if (inventario.contemItem("lupa")) { // Caso venha a ser implentado algo em que o protagonista perde a lupa.
             tela.adicionarNaTela("Você olha com a lupa e vê: ");
             Item item = ambienteAtual.getItem();
 
@@ -310,17 +331,16 @@ public class Jogo {
                 analisador.definirComando("pegar",
                         "Pega um item do ambiente atual, só funciona quando há itens no local");
             } else {
-                 tela.adicionarNaTela("Não há nada aqui!");
+                tela.adicionarNaTela("Não há nada aqui!");
             }
         } else {
-             tela.adicionarNaTela("Você não tem uma lupa para olhar!");
+            tela.adicionarNaTela("Você não tem uma lupa para olhar!");
         }
     }
 
     /**
      * Checa o inventário do protagonista.
      */
-
     private void checarInventario() {
         tela.adicionarNaTela(inventario.getItens());
     }
@@ -328,7 +348,6 @@ public class Jogo {
     /**
      * Pega um item do ambiente atual.
      */
-
     private void pegarItem() {
         Item item = ambienteAtual.removerItem();
         if (item != null) {
@@ -343,10 +362,10 @@ public class Jogo {
 
     /**
      * Acusa o personagem de ser o assassino.
-     * 
+     *
      * @param comando Comando com a palavra acusar e o nome do personagem.
+     * @return true se o jogo deve ser encerrado, false caso contrário.
      */
-
     private boolean acusarPersonagem(Comando comando) {
         if (ambienteAtual.getNome().equals("Delegacia")) {
 
@@ -376,17 +395,18 @@ public class Jogo {
     }
 
     /**
-     * @param comando Comando com a palavra sair para sair do jogo, caso haja outra
-     *                palavra além de 'sair' o jogo não é finalizado.
-     * @return true se o comando finaliza o jogo, false caso contrario.
+     * Finaliza o jogo, se o comando for válido para tal.
+     *
+     * @param comando Comando com a palavra sair. Caso haja outra palavra além de
+     *                'sair', o jogo não é finalizado.
+     * @return true se o comando finaliza o jogo, false caso contrário.
      */
-
     private boolean sair(Comando comando) {
         if (comando.temSegundaPalavra()) {
-             tela.adicionarNaTela("Sair o que?");
+            tela.adicionarNaTela("Sair o que?");
             return false;
         } else {
-            return true; // sinaliza que quer sair
+            return true; // Sinaliza que quer sair.
         }
     }
 }
