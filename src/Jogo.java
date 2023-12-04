@@ -101,7 +101,7 @@ public class Jogo {
                 "Desculpa a demora em atendê-lo! Estava enfaixando meu machucado",
                 "Estou chocado! Não posso acreditar que ela chegou a esse ponto!", plano, false);
 
-        bosque = new Ambiente("Bosque", "Você está no bosque", sansao, null, null, null, null, null, false);
+        bosque = new Ambiente("Bosque", "Você está no bosque", sansao, "Luiz M.", "Um homem com uma estranha camisa de uma xicará de café", "Lembre-se: sempre faça a modelagem antes da implementação.", null, null, false);
 
         galpao = new Ambiente("Galpao", "Você está no galpão", balde, null, null, null, null, null, false);
 
@@ -134,7 +134,7 @@ public class Jogo {
     /**
      * Define os comandos que são conhecidos pelo analisador.
      */
-    private void gerarComandos() { // ADICIONAR DESCRIÇÃO DOS COMANDOS
+    private void gerarComandos() { // Adicionar descrição dos itens.
         analisador.definirComando("ajuda", "Mostra os comandos disponíveis");
         analisador.definirComando("ir", "Vai para um ambiente, digite 'ir' e a direção");
         analisador.definirComando("observar", "Observa o ambiente atual e dá as informações sobre ele");
@@ -153,7 +153,7 @@ public class Jogo {
         Item lupa, mapa, carteira, distintivo;
         lupa = new Ferramenta("lupa", "Uma lupa de detetive");
         mapa = new Ferramenta("mapa", "Um mapa da cidade");
-        carteira = new Consumivel("carteira", "A carteira do detetive", 2);
+        carteira = new Ferramenta("carteira", "A carteira do detetive");
         distintivo = new Ferramenta("distintivo", "O distintivo do detetive");
         inventario.adicionarItem(lupa);
         inventario.adicionarItem(mapa);
@@ -295,7 +295,7 @@ public class Jogo {
      * Olha com a lupa o ambiente atual.
      */
     private void procurarComLupa() {
-        if (inventario.contemItem("lupa")) { // Caso venha a ser implentado algo em que o protagonista perde a lupa
+        if (inventario.contemItem("lupa")) { // Caso venha a ser implentado algo em que o protagonista perde a lupa.
             tela.adicionarNaTela("Você olha com a lupa e vê: ");
             Item item = ambienteAtual.getItem();
 
