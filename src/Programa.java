@@ -12,8 +12,8 @@ public class Programa {
      * Método main que instancia um objeto da classe Jogo e chama o método jogar() para iniciar o jogo.
      */
 	public static void main(String[] args) {
-		// Jogo jogo = new Jogo();
-		Jogo jogo = new Jogo();
+		Jogo jogo;
+		jogo = Jogo.getInstance();
 
 		jogo.jogar();
 

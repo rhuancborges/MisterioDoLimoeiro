@@ -24,19 +24,34 @@ public class Jogo {
     private Inventario inventario;
     private String assassino;
     private Tela tela;
+    private static Jogo instanciaUnica;
 
     /**
      * Construtor da classe Jogo.
      * Inicializa o analisador, inventário, cria os ambientes, define os comandos
      * conhecidos e gera o inventário inicial.
      */
-    public Jogo() {
+    private Jogo() {
         analisador = new Analisador();
         inventario = new Inventario();
         criarAmbientes();
         gerarComandos();
         gerarInventarioInicial();
         tela = new Tela();
+    }
+
+    /**
+    * Retorna a instância única da classe Jogo, seguindo o padrão de projeto Singleton.
+    * Se a instância única ainda não foi criada, ela é criada no momento da chamada.
+    * Caso contrário, a instância já existente é retornada.
+    *
+    * @return A instância única da classe Jogo.
+    */
+    public static Jogo getInstance() {
+        if(instanciaUnica == null) {
+            instanciaUnica = new Jogo();
+        }
+        return instanciaUnica;
     }
 
     /**
