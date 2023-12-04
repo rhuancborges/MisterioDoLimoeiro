@@ -15,7 +15,7 @@ import java.io.IOException;
  * registrar.
  * 
  * @author João Pedro Nogueira Lucas
- * @version 1.0
+ * @version 2023.12.03
  */
 public class LogDeComandos {
     private static final String nomeArquivo = "comandos_digitados.txt";
